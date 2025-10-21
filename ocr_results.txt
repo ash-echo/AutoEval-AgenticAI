@@ -1,0 +1,22 @@
+Exam OCR Results
+
+Image: realtest.jpeg
+Raw OCR:
+Q1.
+Enaku eludde padiku helium
+Summa soner
+Q2.
+Sorry
+Go kill yourself.
+
+Structured Answers:
+Question 1: Enaku eludde padiku helium Summa soner
+Question 2: Sorry Go kill yourself.
+
+Image: realtest1.jpeg
+Raw OCR:
+Enaku eludlu padiku helium Sumu Soner
+
+Structured Answers:
+No answers extracted.
+

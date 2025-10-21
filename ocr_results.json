@@ -1,0 +1,13 @@
+{
+  "realtest.jpeg": {
+    "raw_ocr": "Q1.\nEnaku eludde padiku helium\nSumma soner\nQ2.\nSorry\nGo kill yourself.",
+    "structured": {
+      "1": "Enaku eludde padiku helium Summa soner",
+      "2": "Sorry Go kill yourself."
+    }
+  },
+  "realtest1.jpeg": {
+    "raw_ocr": "Enaku eludlu padiku helium Sumu Soner",
+    "structured": {}
+  }
+}
