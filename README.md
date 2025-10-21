@@ -1,125 +1,101 @@
-# Handwriting and Math Exam OCR Engine
+# AI Exam Evaluation System
 
-A complete OCR system for handwritten English text and mathematical equations using the Hugging Face Qwen-VL model.
+A multi-agent web application for evaluating handwritten exam answers using OCR and AI.
 
 ## Features
 
-- **Accurate OCR**: Uses Qwen-VL vision-language model for high-quality transcription
-- **Math Support**: Recognizes and converts mathematical equations to LaTeX format
-- **Structured Output**: Parses exam answers into question-numbered format
-- **Multiple Formats**: Save results as JSON, DOCX, or TXT
-- **Batch Processing**: Process multiple images from a folder
-- **Error Handling**: Robust handling of corrupt or unreadable images
-- **GPU Support**: Automatic GPU detection and utilization for faster processing
-- **Memory Efficient**: Optimized for production use
+- **OCR Engine**: Uses Hugging Face Qwen-VL model for accurate text extraction from handwritten exams
+- **Image Alignment**: OpenCV-based preprocessing for better OCR accuracy
+- **Question Parsing**: Regex-based extraction of question-answer pairs
+- **AI Evaluation**: LLaMA3-powered grading and feedback
+- **Web Interface**: React frontend with Tailwind CSS for easy uploads and results viewing
+- **Database**: MongoDB storage for submissions and evaluations
 
-## Requirements
+## Architecture
+
+- **Backend**: FastAPI with async agents (OCR, Alignment, Parser, Evaluation)
+- **Frontend**: React + Vite + Tailwind CSS
+- **Database**: MongoDB with Motor
+- **AI Models**: Qwen2-VL-2B-Instruct for OCR, LLaMA3 for evaluation
+
+## Setup
+
+### Prerequisites
 
 - Python 3.8+
-- Virtual environment (recommended)
-- Sufficient RAM (16GB+ recommended for 7B model)
-- GPU with CUDA support (optional but recommended)
+- Node.js 16+
+- MongoDB
+- Ollama (for LLaMA3)
 
-## Installation
+### Backend Setup
 
-1. Clone or download this repository
-2. Create a virtual environment:
+1. Navigate to backend directory:
    ```bash
-   python -m venv ocr_env
-   ocr_env\Scripts\activate  # On Windows
+   cd backend
    ```
-3. Install dependencies:
+
+2. Install dependencies:
    ```bash
    pip install -r requirements.txt
    ```
 
-The script will automatically install missing packages on first run.
+3. Start MongoDB (if not running)
+
+4. Start Ollama and pull LLaMA3:
+   ```bash
+   ollama pull llama3
+   ```
+
+5. Run the backend:
+   ```bash
+   uvicorn app.main:app --reload
+   ```
+
+### Frontend Setup
+
+1. Navigate to frontend directory:
+   ```bash
+   cd frontend
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
 
 ## Usage
 
-### Basic Usage
+1. Open the frontend at http://localhost:5173
+2. Upload a handwritten exam image
+3. View OCR results, structured answers, and AI evaluations
 
-1. Place your handwritten exam images in the `sample_images` folder
-2. Run the main script:
-   ```bash
-   python main.py
-   ```
+## API Endpoints
 
-### API Usage
+- `POST /upload`: Upload and process an exam image
+- `GET /submission/{id}`: Retrieve a submission by ID
 
-```python
-from main import OCREngine
+## Project Structure
 
-# Initialize engine
-engine = OCREngine()
-
-# Process single image
-ocr_text = engine.ocr_handwriting("path/to/image.jpg")
-structured_answers = engine.parse_exam_output(ocr_text)
-
-# Process folder
-results = engine.process_folder("path/to/image/folder")
-
-# Save results
-engine.save_results(results, "output.json", format="json")
-engine.save_results(results, "output.docx", format="docx")
-engine.save_results(results, "output.txt", format="txt")
 ```
-
-## Supported Image Formats
-
-- JPG/JPEG
-- PNG
-- BMP
-- TIFF/TIF
-
-## Output Formats
-
-### JSON
-Structured dictionary with image names as keys and question-answer pairs as values.
-
-### DOCX
-Formatted Word document with questions and answers.
-
-### TXT
-Plain text file with exam-style formatting.
-
-## Model Information
-
-- **Model**: Qwen/Qwen2-VL-7B-Instruct
-- **Capabilities**: Vision-language understanding, text generation
-- **Specialization**: Handwritten text recognition, mathematical equation parsing
-
-## Troubleshooting
-
-### Memory Issues
-- Use a smaller model variant if available
-- Ensure sufficient RAM (32GB+ for large images)
-- Process images one at a time for very large batches
-
-### GPU Issues
-- Install CUDA toolkit if not present
-- Update GPU drivers
-- The script automatically falls back to CPU if GPU unavailable
-
-### Poor OCR Quality
-- Ensure images are well-lit and high resolution
-- Crop images to focus on text areas
-- For very messy handwriting, consider preprocessing (not included)
-
-## Extending the System
-
-The code is modular and easy to extend:
-
-- **Custom Prompts**: Modify the prompt in `ocr_handwriting()` for different OCR tasks
-- **Additional Models**: Change `model_name` in `OCREngine.__init__()`
-- **Preprocessing**: Add image preprocessing steps before OCR
-- **Post-processing**: Enhance `parse_exam_output()` for better parsing
-
-## License
-
-This project is provided as-is for educational and research purposes.
-
-## Author
-
-Generated by GitHub Copilot - October 20, 2025
+backend/
+├── app/
+│   ├── agents/          # AI agents (OCR, alignment, parser, evaluation)
+│   ├── models/          # Pydantic schemas
+│   ├── utils/           # File and text utilities
+│   ├── database.py      # MongoDB connection
+│   ├── main.py          # FastAPI app
+│   └── orchestrator.py  # Agent coordinator
+├── requirements.txt
+frontend/
+├── src/
+│   ├── components/      # React components
+│   ├── App.jsx
+│   └── index.css
+├── tailwind.config.js
+└── package.json
+```
