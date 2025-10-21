@@ -1,11 +1,32 @@
-Q1: Simplify: 3x + 4x - 5 + 7 - [Student's OCR text] 7x + 2 - [Right/Wrong with brief explanation] Right
+Q1: Simplify: 3x + 4x - 5 + 7
+=> 3x + 4x = 7x
+=> -5 + 7 = 2
+=> 7x + 2
+[Right] The student correctly combined like terms and simplified the expression.
 
-Q2: Solve for x: 2x + 3 = 11 - [Student's OCR text] x = 4 - [Right/Wrong with brief explanation] Right
+Q2: Solve x = 2x + 3 = 11
+2x + 3 = 11
+2x = 8
+2x / 2 = 8 / 2
+=> x = 4
+[Right] The student correctly solved for x by isolating it on one side of the equation.
 
-Q3: Find the area of a circle with radius 7 cm. - [Student's OCR text] 167.3 - [Right/Wrong with brief explanation] Wrong, student used incorrect value for pi (π)
+Q3: Area = πr²
+r = 7
+=> 3.14 x 6 x 6
+=> 167.3
+[Wrong, but partially correct] The student used the correct formula for the area of a circle (A = πr²) and the correct radius (r = 7), but made an error in calculating the area (should be 153.86 cm²).
 
-Q4: Define Pythagoras theorem. - [Student's OCR text] Pythagorean is shit - [Right/Wrong with brief explanation] Wrong, the answer does not define Pythagoras theorem
+Q4: Define Pythagoras theorem.
+Pythagorean is shit
+[Wrong] The student did not provide a definition for Pythagoras' theorem, instead providing an unrelated statement.
 
-Q5: Evaluate: (5² + 3²) ÷ 4 - [Student's OCR text] 8.5 - [Right/Wrong with brief explanation] Right
+Q5: Evaluate (5² + 3²) / 4
+=> 5² = 25
+=> 3² = 9
+=> Sum = 34
+3² + 4 = 8.5
+[Wrong] The student made an error in the final step by adding 3² and 4 instead of dividing the sum by 4.
 
-Q6: If a train travels 120 km in 2 hours, find its speed. - [Student's OCR text] Meriyadhu (This question is about finding speed, but the student has not provided an answer) - [Right/Wrong with brief explanation] Wrong, the student did not provide a numerical value for the speed.
+Q6: Meriyadhu
+[Missing answer] This question is not present in the provided list of questions, so it's unclear what the student was asked to do.

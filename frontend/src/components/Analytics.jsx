@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { BarChart3, Users, TrendingUp, Award, PieChart, Activity, Calendar } from 'lucide-react';
+import { BarChart3, Users, TrendingUp, Award, PieChart, Activity, Calendar, BookOpen } from 'lucide-react';
 import axios from 'axios';
 
 const Analytics = () => {
