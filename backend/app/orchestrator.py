@@ -116,9 +116,19 @@ class Orchestrator:
                 # Handle new evaluation format
                 if isinstance(evaluation_result, dict) and 'evaluations' in evaluation_result:
                     evaluations = evaluation_result['evaluations']
-                    # Preserve partial marks as returned by the evaluation agent
-                    total_score = sum(eval_data.get('score', 0) for eval_data in evaluations.values())
+                    # Calculate acquired marks for each question: score * max marks
+                    total_score = 0.0
+                    for q_key, eval_data in evaluations.items():
+                        # Get max marks from question key
+                        max_marks = question_key.get(q_key, {}).get('marks', 1)
+                        # Acquired marks for this question
+                        acquired = float(eval_data.get('score', 0)) * max_marks
+                        eval_data['acquired_marks'] = acquired
+                        eval_data['max_marks'] = max_marks
+                        total_score += acquired
                     max_score = sum(q.get('marks', 0) for q in question_key.values())
+                    # Optionally, add percentage to result
+                    percentage = (total_score / max_score * 100) if max_score else 0.0
                 else:
                     # Fallback to old format
                     evaluations = evaluation_result
@@ -139,6 +149,7 @@ class Orchestrator:
                 'evaluation': evaluations,
                 'total_score': total_score,
                 'max_score': max_score,
+                'percentage': percentage,
                 'status': 'success' if eval_success else 'failed'
             }
 

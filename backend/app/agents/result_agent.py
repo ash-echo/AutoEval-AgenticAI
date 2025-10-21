@@ -46,11 +46,10 @@ def parse_llama_results() -> Dict[str, Any]:
 
         logger.info(f"Read {len(result_text)} characters from llama_output.txt")
 
-        # First, parse the evaluation results to determine correctness
+        # First, parse the evaluation results to determine correctness and extract marks if present
         evaluations = {}
         lines = result_text.split('\n')
         i = 0
-        
         while i < len(lines):
             line = lines[i].strip()
             if line.startswith('Q') and ':' in line:
@@ -58,43 +57,60 @@ def parse_llama_results() -> Dict[str, Any]:
                 q_match = re.match(r'Q(\d+)', line)
                 if q_match:
                     q_num = f"Q{q_match.group(1)}"
-                    
-                    # Look for the [Right]/[Wrong] marker in subsequent lines
-                    evaluation_found = False
                     raw_evaluation = line
+                    score = None
+                    is_correct = False
+                    # Collect all lines for this question block
+                    block_lines = [line]
                     j = i + 1
-                    
-                    while j < len(lines) and not evaluation_found:
-                        next_line = lines[j].strip()
-                        raw_evaluation += "\n" + next_line
-                        
-                        # Check for evaluation markers
-                        if '[Right]' in next_line or '[Wrong]' in next_line or '[Not Applicable]' in next_line:
-                            evaluation_found = True
-                            
-                            if '[Right]' in next_line:
-                                score = 1.0
-                                is_correct = True
-                            elif '[Wrong]' in next_line:
-                                score = 0.0
-                                is_correct = False
-                            elif '[Not Applicable]' in next_line:
-                                score = 0.0
-                                is_correct = False
-                            else:
-                                score = 0.5  # Partial credit for unclear
-                                is_correct = False
-                            
-                            evaluations[q_num] = {
-                                "score": score,
-                                "is_correct": is_correct,
-                                "raw_evaluation": raw_evaluation.strip()
-                            }
-                            break
-                        
+                    while j < len(lines) and not (lines[j].strip().startswith('Q') and ':' in lines[j]):
+                        block_lines.append(lines[j].strip())
                         j += 1
-                    
-                    # Move past this question's lines
+                    block_text = '\n'.join(block_lines)
+                    # Try to extract marks or evaluation marker from any line in the block
+                    found = False
+                    for l in block_lines:
+                        marks_match_inline = re.search(r'\(Marks:?\s*(\d+(?:\.\d+)?)\)', l, re.IGNORECASE)
+                        if marks_match_inline:
+                            try:
+                                score = float(marks_match_inline.group(1))
+                            except Exception:
+                                score = 0.0
+                            is_correct = score > 0.0
+                            found = True
+                            break
+                        elif re.search(r'\bRight\b', l, re.IGNORECASE):
+                            score = 1.0
+                            is_correct = True
+                            found = True
+                            break
+                        elif re.search(r'\bWrong\b', l, re.IGNORECASE):
+                            score = 0.0
+                            is_correct = False
+                            found = True
+                            break
+                    # If not found, check for marks in the block as before
+                    if not found:
+                        for l in block_lines:
+                            marks_match = re.search(r'(?:Marks Awarded|Score)\s*[:=]\s*(\d+(?:\.\d+)?)\s*(?:/\s*(\d+(?:\.\d+)?))?', l, re.IGNORECASE)
+                            if marks_match:
+                                if marks_match.group(2):
+                                    try:
+                                        score = float(marks_match.group(1)) / float(marks_match.group(2))
+                                    except Exception:
+                                        score = float(marks_match.group(1))
+                                else:
+                                    score = float(marks_match.group(1))
+                                is_correct = score > 0.0
+                                found = True
+                                break
+                    if score is None:
+                        score = 0.0
+                    evaluations[q_num] = {
+                        "score": score,
+                        "is_correct": is_correct,
+                        "raw_evaluation": block_text.strip()
+                    }
                     i = j
                 else:
                     i += 1
