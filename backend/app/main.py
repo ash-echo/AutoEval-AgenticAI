@@ -37,20 +37,20 @@ UPLOAD_DIR.mkdir(exist_ok=True)
 uploaded_files = {}
 
 # Database events - disabled for testing
-# @app.on_event("startup")
-# async def startup_event():
-#     try:
-#         await db.connect()
-#         logger.info("Database connected successfully")
-#     except Exception as e:
-#         logger.warning(f"Database connection failed: {e}. Running in offline mode.")
+@app.on_event("startup")
+async def startup_event():
+    try:
+        await db.connect()
+        logger.info("Database connected successfully")
+    except Exception as e:
+        logger.warning(f"Database connection failed: {e}. Running in offline mode.")
 
-# @app.on_event("shutdown")
-# async def shutdown_event():
-#     try:
-#         await db.disconnect()
-#     except:
-#         pass
+@app.on_event("shutdown")
+async def shutdown_event():
+    try:
+        await db.disconnect()
+    except:
+        pass
 
 @app.post("/upload/answer_sheet", response_model=dict)
 async def upload_answer_sheet(file: UploadFile = File(...)):

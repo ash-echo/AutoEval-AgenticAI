@@ -1,32 +1,11 @@
-Q1: Simplify: 3x + 4x - 5 + 7
-=> 3x + 4x = 7x
-=> -5 + 7 = 2
-=> 7x + 2
-[Right]
+Q1: Simplify: 3x + 4x - 5 + 7 - [Student's OCR text] 7x + 2 - [Right/Wrong with brief explanation] Right
 
-Q2: Solve x = 2x + 3 = 11
-2x + 3 = 11
-2x = 8
-2x / 2 = 8 / 2
-=> x = 4
-[Right]
+Q2: Solve for x: 2x + 3 = 11 - [Student's OCR text] x = 4 - [Right/Wrong with brief explanation] Right
 
-Q3: Area = πr²
-r = 7
-=> 3.14 x 6 x 6
-=> 167.3
-[Wrong, the area should be 153.86 cm²]
+Q3: Find the area of a circle with radius 7 cm. - [Student's OCR text] 167.3 - [Right/Wrong with brief explanation] Wrong, student used incorrect value for pi (π)
 
-Q4: Define Pythagoras theorem.
-Pythagorean is shit
-[Wrong, the answer should define Pythagoras theorem as In a right-angled triangle, the square of the hypotenuse equals the sum of the squares of the other two sides]
+Q4: Define Pythagoras theorem. - [Student's OCR text] Pythagorean is shit - [Right/Wrong with brief explanation] Wrong, the answer does not define Pythagoras theorem
 
-Q5: Evaluate (5² + 3²) / 4
-=> 5² = 25
-=> 3² = 9
-=> Sum = 34
-3² + 4 = 8.5
-[Wrong, the correct answer is 8.5]
+Q5: Evaluate: (5² + 3²) ÷ 4 - [Student's OCR text] 8.5 - [Right/Wrong with brief explanation] Right
 
-Q6: Meriyadhu
-[This question seems to be about finding the speed of a train, but the student did not provide an answer. The question text is missing from your provided questions.]
+Q6: If a train travels 120 km in 2 hours, find its speed. - [Student's OCR text] Meriyadhu (This question is about finding speed, but the student has not provided an answer) - [Right/Wrong with brief explanation] Wrong, the student did not provide a numerical value for the speed.
