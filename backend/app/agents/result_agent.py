@@ -37,7 +37,7 @@ def parse_llama_results() -> Dict[str, Any]:
         except json.JSONDecodeError:
             pass
         
-        # Parse format: Q#: Question - Student answer - Assessment
+        # Parse LLaMA output format: Q#: Question - Assessment text [Right/Wrong]
         evaluations = {}
         lines = result_text.split('\n')
         for line in lines:
@@ -47,30 +47,38 @@ def parse_llama_results() -> Dict[str, Any]:
                 q_num = parts[0].strip()
                 content = parts[1].strip()
                 
-                # Split by " - " to get question, student answer, assessment
+                # Find the question and assessment parts
                 if ' - ' in content:
-                    sections = content.split(' - ', 2)
-                    if len(sections) >= 3:
-                        question = sections[0].strip()
-                        student_answer = sections[1].strip()
-                        assessment = sections[2].strip()
+                    question_part, assessment_part = content.split(' - ', 1)
+                    question = question_part.strip()
+                    assessment = assessment_part.strip()
+                    
+                    # Check for [Right] or [Wrong] markers
+                    if '[Right]' in assessment:
+                        score = 1
+                        is_correct = True
+                    elif '[Wrong]' in assessment:
+                        score = 0
+                        is_correct = False
                     else:
-                        question = content
-                        student_answer = ""
-                        assessment = "Not properly formatted"
+                        # Fallback: check for keywords
+                        score = 1 if 'correct' in assessment.lower() and 'incorrect' not in assessment.lower() else 0
+                        is_correct = score == 1
+                    
+                    evaluations[q_num] = {
+                        "score": score,
+                        "feedback": f"Question: {question}\nAssessment: {assessment}",
+                        "strengths": "Correct answer" if is_correct else "",
+                        "improvements": "Review the concept" if not is_correct else ""
+                    }
                 else:
-                    question = content
-                    student_answer = ""
-                    assessment = "No assessment provided"
-                
-                # Simple scoring: if "right" in assessment, give full marks, else 0
-                score = 1 if 'right' in assessment.lower() else 0
-                evaluations[q_num] = {
-                    "score": score,
-                    "feedback": f"Question: {question}\nStudent: {student_answer}\nAssessment: {assessment}",
-                    "strengths": "Correct" if score == 1 else "",
-                    "improvements": "Review answer" if score == 0 else ""
-                }
+                    # Fallback for unparseable lines
+                    evaluations[q_num] = {
+                        "score": 0,
+                        "feedback": f"Unparseable assessment: {content}",
+                        "strengths": "",
+                        "improvements": "Assessment could not be parsed"
+                    }
         
         # Calculate totals (assuming each question is worth 1 mark for simplicity)
         total_score = sum(v.get('score', 0) for v in evaluations.values())

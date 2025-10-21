@@ -82,42 +82,23 @@ class Orchestrator:
             with open(question_key_raw_file, 'w', encoding='utf-8') as f:
                 json.dump(raw_question_key_data, f, indent=2, ensure_ascii=False)
 
-            # Step 1: Align answer sheet
-            from .agents.alignment_agent import align_images, process_pdf_to_images
-            file_ext = Path(answer_sheet_path).suffix.lower()
-            if file_ext == '.pdf':
-                image_paths = await asyncio.to_thread(process_pdf_to_images, answer_sheet_path)
-                aligned_paths = [await asyncio.to_thread(align_images, img_path) for img_path in image_paths]
-            else:
-                aligned_paths = [await asyncio.to_thread(align_images, answer_sheet_path)]
+            # Step 1: Use test_ocr_only for complete OCR processing (includes alignment, OCR, and parsing)
+            from test_ocr_only import process_ocr_only
+            ocr_result = await asyncio.to_thread(process_ocr_only, answer_sheet_path)
+            student_answers = ocr_result.get("questions", {})
+            full_ocr_text = f"OCR processed via test_ocr_only for {len(student_answers)} questions"
 
-            # Step 4: Parse question key
+            # Clean up GPU memory after OCR processing
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+                logger.info("GPU cache cleared after OCR processing")
+
+            # Step 2: Parse question key
             from .agents.parser_agent import parse_question_key
             question_key_data = await asyncio.to_thread(parse_question_key, question_key_path)
             subject = question_key_data.get("subject", "general")
             question_key = question_key_data.get("questions", {})
-
-            # Step 2: OCR all aligned images with subject-aware prompts
-            from .agents.ocr_agent_qwen import OCREngine
-            ocr_engine = OCREngine()
-            ocr_texts = []
-            for aligned_path in aligned_paths:
-                ocr_text = await asyncio.to_thread(ocr_engine.ocr_handwriting, aligned_path, subject)
-                ocr_texts.append(ocr_text)
-            full_ocr_text = '\n'.join(ocr_texts)
-
-            # Step 3: Parse student answers from OCR
-            student_answers = await asyncio.to_thread(ocr_engine.parse_exam_output, full_ocr_text)
-
-            # Clean up OCR model memory to free GPU RAM for evaluation
-            logger.info("Cleaning up OCR model memory...")
-            del ocr_engine
-            import torch
-            if torch.cuda.is_available():
-                torch.cuda.empty_cache()
-            import gc
-            gc.collect()
-            await asyncio.sleep(2)  # Small delay to ensure cleanup
 
             # Step 5: Evaluate
             from .agents.evaluation_agent_mistral import evaluate_answers
@@ -152,7 +133,7 @@ class Orchestrator:
                 'evaluation': evaluations,
                 'total_score': total_score,
                 'max_score': max_score,
-                'status': 'success'
+                'status': 'success' if eval_success else 'failed'
             }
 
             # Save parsed data to raw_things folder

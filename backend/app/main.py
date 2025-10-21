@@ -108,7 +108,7 @@ async def upload_question_key(file: UploadFile = File(...)):
         logger.error(f"Question key upload failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))
 
-@app.post("/process", response_model=SubmissionResponse)
+@app.post("/process", response_model=dict)
 async def process_submission(
     answer_sheet_id: str = Form(...),
     question_key_id: str = Form(...),
@@ -141,39 +141,40 @@ async def process_submission(
         orchestrator = Orchestrator()
         result = await orchestrator.process_submission(answer_sheet_path, question_key_path)
 
-        # Save to database
-        from datetime import datetime
-        submission = {
-            "student_name": student_name,
-            "subject": result.get("subject", subject),  # Use subject from question key if available
-            "timestamp": datetime.utcnow(),
-            "status": result.get("status", "unknown")
-        }
-        submission_id = await db.save_submission(submission)
+        # Add student info to result
+        result['student_name'] = student_name
+        result['subject'] = result.get('subject', subject)
 
-        answers = {
-            "submission_id": submission_id,
-            "answers": result.get("student_answers", {})
-        }
-        await db.save_answers(answers)
+        # Save to database (optional, for analytics)
+        try:
+            from datetime import datetime
+            submission = {
+                "student_name": student_name,
+                "subject": result.get("subject", subject),
+                "timestamp": datetime.utcnow(),
+                "status": result.get("status", "unknown")
+            }
+            submission_id = await db.save_submission(submission)
 
-        evaluation = {
-            "submission_id": submission_id,
-            "results": result.get("evaluation", {}),
-            "total_score": result.get("total_score", 0),
-            "max_score": result.get("max_score", 0)
-        }
-        await db.save_evaluation(evaluation)
+            answers = {
+                "submission_id": submission_id,
+                "answers": result.get("student_answers", {})
+            }
+            await db.save_answers(answers)
 
-        return SubmissionResponse(
-            id=submission_id,
-            status=result.get('status', 'unknown'),
-            created_at=datetime.utcnow(),
-            student_name=student_name,
-            subject=subject,
-            total_score=result.get('total_score'),
-            max_score=result.get('max_score')
-        )
+            evaluation = {
+                "submission_id": submission_id,
+                "results": result.get("evaluation", {}),
+                "total_score": result.get("total_score", 0),
+                "max_score": result.get("max_score", 0)
+            }
+            await db.save_evaluation(evaluation)
+
+            result['submission_id'] = submission_id
+        except Exception as db_error:
+            logger.warning(f"Database save failed: {db_error}. Continuing without database.")
+
+        return result
 
     except Exception as e:
         logger.error(f"Processing failed: {e}")

@@ -4,7 +4,93 @@ sys.path.append(os.path.join(os.path.dirname(__file__), 'backend'))
 
 from app.agents.ocr_agent_qwen import OCREngine
 from app.agents.parser_agent import extract_text_from_pdf
+from app.agents.alignment_agent import process_pdf_to_images
 from pathlib import Path
+from typing import Dict
+
+def process_ocr_only(pdf_path: str) -> Dict[str, str]:
+    """
+    Process OCR for a PDF and return student answers.
+    This is the same logic as test_ocr_only but as a callable function.
+    """
+    print(f"Processing OCR for: {pdf_path}")
+
+    try:
+        # Initialize OCR engine
+        ocr_engine = OCREngine()
+
+        # Convert PDF to images
+        from app.agents.alignment_agent import process_pdf_to_images
+        image_paths = process_pdf_to_images(pdf_path)
+        print(f"Found {len(image_paths)} pages")
+
+        # OCR each page and accumulate all questions
+        all_ocr_texts = []
+        for i, img_path in enumerate(image_paths):
+            print(f"OCR processing page {i+1}: {img_path}")
+            ocr_text = ocr_engine.ocr_handwriting(img_path, "physics")
+            all_ocr_texts.append(ocr_text)
+
+        # Combine all pages into one document
+        full_ocr_text = '\n\n'.join(all_ocr_texts)
+
+        # Parse all questions from the combined document
+        student_answers = ocr_engine.parse_exam_output(full_ocr_text)
+        print(f"Found {len(student_answers)} questions total: {list(student_answers.keys())}")
+
+        # Optional: Save to JSON files (can be disabled if not needed)
+        _save_ocr_results(student_answers, pdf_path)
+
+        # Clean up GPU memory
+        import torch
+        import gc
+        if hasattr(ocr_engine, 'model'):
+            del ocr_engine.model
+        if hasattr(ocr_engine, 'tokenizer'):
+            del ocr_engine.tokenizer
+        if hasattr(ocr_engine, 'processor'):
+            del ocr_engine.processor
+        del ocr_engine
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+        gc.collect()
+        print("GPU memory cleaned up after OCR processing")
+
+        return {"questions": student_answers}
+
+    except Exception as e:
+        print(f"OCR processing failed: {e}")
+        raise
+
+def _save_ocr_results(student_answers: Dict[str, str], pdf_path: str):
+    """Save parsed answers to JSON files."""
+    import json
+    import uuid
+    
+    correct_ocr_dir = Path(__file__).parent / "backend" / "correct_ocr"
+    correct_ocr_dir.mkdir(exist_ok=True, parents=True)
+    
+    submission_id = str(uuid.uuid4())[:8]
+    pdf_name = Path(pdf_path).stem.replace(' ', '_')
+    
+    pdf_folder = correct_ocr_dir / f"{pdf_name}_{submission_id}"
+    pdf_folder.mkdir(exist_ok=True, parents=True)
+    
+    for question_num, answer_text in student_answers.items():
+        answer_lines = [line.strip() for line in answer_text.split('\n') if line.strip()]
+        clean_answer = '\n'.join(answer_lines)
+        
+        question_data = {
+            "question_number": question_num,
+            "Answer": clean_answer,
+            "pdf_file": str(pdf_path)
+        }
+        
+        question_file = pdf_folder / f"question_{question_num}.json"
+        with open(question_file, 'w', encoding='utf-8') as f:
+            json.dump(question_data, f, indent=2, ensure_ascii=False)
+        
+        print(f"Saved question {question_num} to {question_file}")
 
 def test_ocr_only():
     # Test OCR extraction only
