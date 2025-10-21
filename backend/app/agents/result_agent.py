@@ -1,7 +1,8 @@
 """
-Result Agent: Parses LLaMA output from LamaRes folder into structured evaluation results
+Result Agent: Uses Mistral LLM to analyze LLaMA output and provide detailed evaluation results
 
-Reads the raw LLaMA response from LamaRes/llama_output.txt and extracts structured evaluation data.
+Reads the raw LLaMA response from llama_output.txt and uses Mistral LLM to extract
+structured evaluation data with detailed feedback, strengths, and improvements.
 """
 
 import logging
@@ -10,86 +11,176 @@ import re
 from pathlib import Path
 from typing import Dict, Any
 
+try:
+    import ollama
+except ImportError:
+    logger = logging.getLogger(__name__)
+    logger.error("Ollama not installed. Install with: pip install ollama")
+    ollama = None
+
 logger = logging.getLogger(__name__)
 
 def parse_llama_results() -> Dict[str, Any]:
     """
-    Read LLaMA output from LamaRes folder and parse into structured evaluation format.
+    Read LLaMA output from llama_output.txt and use Mistral LLM to analyze and structure the results.
     Returns {"evaluations": {...}, "total_score": int, "max_score": int}
     """
     try:
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
         output_file = project_root / "llama_output.txt"
-        
+
+        logger.info(f"Result agent looking for llama_output.txt at: {output_file}")
+        logger.info(f"Absolute path: {output_file.absolute()}")
+
         if not output_file.exists():
             logger.error(f"LLaMA output file not found: {output_file}")
             return {"evaluations": {}, "total_score": 0, "max_score": 0}
-        
+
         with open(output_file, 'r', encoding='utf-8') as f:
             result_text = f.read().strip()
-        
-        # Try to parse as JSON first (for fallback case)
-        try:
-            data = json.loads(result_text)
-            if isinstance(data, dict) and 'evaluations' in data:
-                return data
-        except json.JSONDecodeError:
-            pass
-        
-        # Parse LLaMA output format: Q#: Question - Assessment text [Right/Wrong]
+
+        if not result_text:
+            logger.error("LLaMA output file is empty")
+            return {"evaluations": {}, "total_score": 0, "max_score": 0}
+
+        logger.info(f"Read {len(result_text)} characters from llama_output.txt")
+
+        # First, parse the evaluation results to determine correctness
         evaluations = {}
         lines = result_text.split('\n')
-        for line in lines:
-            line = line.strip()
+        i = 0
+        
+        while i < len(lines):
+            line = lines[i].strip()
             if line.startswith('Q') and ':' in line:
-                parts = line.split(':', 1)
-                q_num = parts[0].strip()
-                content = parts[1].strip()
-                
-                # Find the question and assessment parts
-                if ' - ' in content:
-                    question_part, assessment_part = content.split(' - ', 1)
-                    question = question_part.strip()
-                    assessment = assessment_part.strip()
+                # Found a question line like "Q1: Question text"
+                q_match = re.match(r'Q(\d+)', line)
+                if q_match:
+                    q_num = f"Q{q_match.group(1)}"
                     
-                    # Check for [Right] or [Wrong] markers
-                    if '[Right]' in assessment:
-                        score = 1
-                        is_correct = True
-                    elif '[Wrong]' in assessment:
-                        score = 0
-                        is_correct = False
-                    else:
-                        # Fallback: check for keywords
-                        score = 1 if 'correct' in assessment.lower() and 'incorrect' not in assessment.lower() else 0
-                        is_correct = score == 1
+                    # Look for the [Right]/[Wrong] marker in subsequent lines
+                    evaluation_found = False
+                    raw_evaluation = line
+                    j = i + 1
                     
-                    evaluations[q_num] = {
-                        "score": score,
-                        "feedback": f"Question: {question}\nAssessment: {assessment}",
-                        "strengths": "Correct answer" if is_correct else "",
-                        "improvements": "Review the concept" if not is_correct else ""
-                    }
+                    while j < len(lines) and not evaluation_found:
+                        next_line = lines[j].strip()
+                        raw_evaluation += "\n" + next_line
+                        
+                        # Check for evaluation markers
+                        if '[Right]' in next_line or '[Wrong]' in next_line or '[Not Applicable]' in next_line:
+                            evaluation_found = True
+                            
+                            if '[Right]' in next_line:
+                                score = 1.0
+                                is_correct = True
+                            elif '[Wrong]' in next_line:
+                                score = 0.0
+                                is_correct = False
+                            elif '[Not Applicable]' in next_line:
+                                score = 0.0
+                                is_correct = False
+                            else:
+                                score = 0.5  # Partial credit for unclear
+                                is_correct = False
+                            
+                            evaluations[q_num] = {
+                                "score": score,
+                                "is_correct": is_correct,
+                                "raw_evaluation": raw_evaluation.strip()
+                            }
+                            break
+                        
+                        j += 1
+                    
+                    # Move past this question's lines
+                    i = j
                 else:
-                    # Fallback for unparseable lines
-                    evaluations[q_num] = {
-                        "score": 0,
-                        "feedback": f"Unparseable assessment: {content}",
-                        "strengths": "",
-                        "improvements": "Assessment could not be parsed"
+                    i += 1
+            else:
+                i += 1
+        
+        logger.info(f"Parsed {len(evaluations)} question evaluations from llama_output.txt")
+        
+        # Now enhance with detailed feedback using Mistral
+        if evaluations:
+            enhanced_evaluations = {}
+            
+            for q_num, eval_data in evaluations.items():
+                if ollama:  # Only enhance if ollama is available
+                    try:
+                        feedback_prompt = f"""
+Based on this evaluation result, provide detailed feedback for the student:
+
+Evaluation: {eval_data['raw_evaluation']}
+
+Provide a JSON response with:
+{{
+    "feedback": "detailed explanation of the evaluation",
+    "strengths": "what the student did well",
+    "improvements": "specific suggestions for improvement"
+}}
+"""
+                        response = ollama.chat(
+                            model='mistral',
+                            messages=[{'role': 'user', 'content': feedback_prompt}],
+                            options={'temperature': 0.1}
+                        )
+                        
+                        feedback_response = response['message']['content'].strip()
+                        
+                        # Try to extract JSON
+                        json_start = feedback_response.find('{')
+                        json_end = feedback_response.rfind('}') + 1
+                        
+                        if json_start != -1 and json_end > json_start:
+                            feedback_data = json.loads(feedback_response[json_start:json_end])
+                            enhanced_evaluations[q_num] = {
+                                "score": eval_data["score"],
+                                "feedback": feedback_data.get("feedback", eval_data["raw_evaluation"]),
+                                "strengths": feedback_data.get("strengths", "Answer submitted" if eval_data["is_correct"] else ""),
+                                "improvements": feedback_data.get("improvements", "Review the concept" if not eval_data["is_correct"] else "")
+                            }
+                        else:
+                            # Fallback to basic feedback
+                            enhanced_evaluations[q_num] = {
+                                "score": eval_data["score"],
+                                "feedback": eval_data["raw_evaluation"],
+                                "strengths": "Correct answer" if eval_data["is_correct"] else "",
+                                "improvements": "Review the concept" if not eval_data["is_correct"] else ""
+                            }
+                            
+                    except Exception as e:
+                        logger.warning(f"Failed to enhance feedback for {q_num}: {e}")
+                        enhanced_evaluations[q_num] = {
+                            "score": eval_data["score"],
+                            "feedback": eval_data["raw_evaluation"],
+                            "strengths": "Correct answer" if eval_data["is_correct"] else "",
+                            "improvements": "Review the concept" if not eval_data["is_correct"] else ""
+                        }
+                else:
+                    # Ollama not available, use basic feedback
+                    logger.warning("Ollama not available for feedback enhancement, using basic feedback")
+                    enhanced_evaluations[q_num] = {
+                        "score": eval_data["score"],
+                        "feedback": eval_data["raw_evaluation"],
+                        "strengths": "Correct answer" if eval_data["is_correct"] else "",
+                        "improvements": "Review the concept" if not eval_data["is_correct"] else ""
                     }
+            
+            evaluations = enhanced_evaluations
         
-        # Calculate totals (assuming each question is worth 1 mark for simplicity)
-        total_score = sum(v.get('score', 0) for v in evaluations.values())
+        # Calculate totals
+        total_score = sum(float(v.get('score', 0)) for v in evaluations.values())
         max_score = len(evaluations)
-        
+
         return {
             "evaluations": evaluations,
             "total_score": total_score,
             "max_score": max_score
         }
-            
+
     except Exception as e:
         logger.error(f"Failed to parse LLaMA results: {e}")
         return {"evaluations": {}, "total_score": 0, "max_score": 0}

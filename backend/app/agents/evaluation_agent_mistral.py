@@ -104,10 +104,29 @@ Keep it simple and direct.
         script_dir = Path(__file__).parent
         project_root = script_dir.parent.parent.parent
         output_file = project_root / "llama_output.txt"
+        
+        logger.info(f"Evaluation agent saving llama_output.txt to: {output_file}")
+        logger.info(f"Absolute path: {output_file.absolute()}")
+        
         with open(output_file, 'w', encoding='utf-8') as f:
             f.write(result_text)
         
         logger.info(f"Saved LLaMA output to {output_file}")
+        
+        # Clear Ollama cache after evaluation to free memory for result agent
+        try:
+            import subprocess
+            logger.info("Stopping Ollama service to free memory for result agent...")
+            # Stop Ollama to free up memory
+            result = subprocess.run('ollama stop', 
+                                  shell=True, capture_output=True, text=True, timeout=10)
+            if result.returncode == 0:
+                logger.info("Ollama service stopped successfully")
+            else:
+                logger.warning(f"Failed to stop Ollama: {result.stderr}")
+        except Exception as e:
+            logger.warning(f"Could not stop Ollama service: {e}")
+        
         return True
     except Exception as e:
         logger.error(f"Comprehensive evaluation failed: {e}")

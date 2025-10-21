@@ -116,8 +116,15 @@ class Orchestrator:
                 # Handle new evaluation format
                 if isinstance(evaluation_result, dict) and 'evaluations' in evaluation_result:
                     evaluations = evaluation_result['evaluations']
-                    total_score = evaluation_result.get('total_score', 0)
-                    max_score = evaluation_result.get('max_score', 0)
+                    
+                    # Convert binary scores (0/1) to actual marks
+                    for q_key, eval_data in evaluations.items():
+                        if q_key in question_key:
+                            actual_marks = question_key[q_key].get('marks', 1)
+                            eval_data['score'] = actual_marks if eval_data.get('score', 0) == 1 else 0
+                    
+                    total_score = sum(eval_data.get('score', 0) for eval_data in evaluations.values())
+                    max_score = sum(q.get('marks', 0) for q in question_key.values())
                 else:
                     # Fallback to old format
                     evaluations = evaluation_result

@@ -148,10 +148,10 @@ const Results = ({ data, onBack }) => {
             Object.entries(data.parsed_question_key.questions).map(([qKey, questionData], index) => {
               const studentAnswer = data.student_answers && data.student_answers[qKey.replace('Q', '')] || 'No answer extracted';
               const evaluationData = data.evaluation && data.evaluation[qKey] || {};
-              const questionScore = evaluationData.score || 0;
               const maxMarks = questionData.marks || 1;
+              const questionScore = evaluationData.score === 1 ? maxMarks : 0;
               const questionPercentage = (questionScore / maxMarks) * 100;
-              const isCorrect = questionPercentage >= 80;
+              const isCorrect = evaluationData.score === 1;
 
               return (
                 <motion.div
@@ -262,7 +262,7 @@ const Results = ({ data, onBack }) => {
 
           <div className="text-center">
             <div className="text-3xl font-bold text-green-600 mb-2">
-              {Object.values(data.evaluation || {}).filter(e => (e.score || 0) / (e.marks || 1) >= 0.8).length}
+              {Object.values(data.evaluation || {}).filter(e => e.score === 1).length}
             </div>
             <div className="text-gray-600">Questions Correct</div>
           </div>
