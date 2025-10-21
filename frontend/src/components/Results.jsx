@@ -147,7 +147,7 @@ const Results = ({ data, onBack }) => {
           {data.parsed_question_key && data.parsed_question_key.questions && 
             Object.entries(data.parsed_question_key.questions).map(([qKey, questionData], index) => {
               const studentAnswer = data.student_answers && data.student_answers[qKey.replace('Q', '')] || 'No answer extracted';
-              const evaluationData = data.evaluation && data.evaluation[qKey.replace('Q', '')] || {};
+              const evaluationData = data.evaluation && data.evaluation[qKey] || {};
               const questionScore = evaluationData.score || 0;
               const maxMarks = questionData.marks || 1;
               const questionPercentage = (questionScore / maxMarks) * 100;

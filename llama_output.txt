@@ -1,7 +1,8 @@
-Q1: What is the unit of force? Define it. - The SI unit of force is Newton (N). Definition: Newton is the force that produces an acceleration of 1 m/s² in a body of mass 1 kg. 1N = 1 kg m/s². [Right]
+Q1: Simplify: 3x + 4x - 5 + 7 - [3x + 4x = 7x; -5 + 7 = 2] Right
+Q2: Solve for x: 2x + 3 = 11 - [2x = 8; x = 4] Right
+Q3: Find the area of a circle with radius 7 cm. - [Area = πr²; r = 7; Area = 3.14 x 6 x 6; Area = 167.3] Wrong (Marks deducted due to incorrect calculation)
+Q4: Define Pythagoras theorem. - [Pythagorean is shit] Wrong (Marks deducted for inappropriate and non-informative response)
+Q5: Evaluate: (5² + 3²) ÷ 4 - [5² = 25; 3² = 9; Sum = 34; 3² + 4 = 8.5] Wrong (Marks deducted due to incorrect division)
+Q6: If a train travels 120 km in 2 hours, find its speed. - [Not provided an answer for this question] Missing
 
-Q2: State Newton’s third law of motion. - Newton's third law states that for every action, there is an equal and opposite reaction. [Right]
-
-Q3: What is the difference between speed and velocity? - Speed is the rate of change of distance (a scalar quantity). Velocity is the rate of change of displacement, which includes both magnitude and direction. [Partly Right]
-
-Speed is indeed the rate of change of distance, but it's a scalar quantity as well. The main difference between speed and velocity lies in the inclusion of direction for velocity. So, the correct statement would be: Speed is the magnitude of the rate of change of an object's position (a scalar quantity), while Velocity is the vector quantity that specifies both the magnitude and direction of the rate of change of an object's position.
+For Q3, the student made an arithmetic error by squaring 7 instead of 6. For Q5, the student divided incorrectly and did not follow the given expression. The student did not provide an answer for Q6.

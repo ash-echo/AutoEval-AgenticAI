@@ -83,6 +83,11 @@ class Orchestrator:
                 json.dump(raw_question_key_data, f, indent=2, ensure_ascii=False)
 
             # Step 1: Use test_ocr_only for complete OCR processing (includes alignment, OCR, and parsing)
+            import sys
+            from pathlib import Path
+            project_root = Path(__file__).parent.parent.parent
+            if str(project_root) not in sys.path:
+                sys.path.insert(0, str(project_root))
             from test_ocr_only import process_ocr_only
             ocr_result = await asyncio.to_thread(process_ocr_only, answer_sheet_path)
             student_answers = ocr_result.get("questions", {})
