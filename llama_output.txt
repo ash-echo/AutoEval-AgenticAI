@@ -1,8 +1,32 @@
-Q1: Simplify: 3x + 4x - 5 + 7 - [3x + 4x = 7x; -5 + 7 = 2] Right
-Q2: Solve for x: 2x + 3 = 11 - [2x = 8; x = 4] Right
-Q3: Find the area of a circle with radius 7 cm. - [Area = πr²; r = 7; Area = 3.14 x 6 x 6; Area = 167.3] Wrong (Marks deducted due to incorrect calculation)
-Q4: Define Pythagoras theorem. - [Pythagorean is shit] Wrong (Marks deducted for inappropriate and non-informative response)
-Q5: Evaluate: (5² + 3²) ÷ 4 - [5² = 25; 3² = 9; Sum = 34; 3² + 4 = 8.5] Wrong (Marks deducted due to incorrect division)
-Q6: If a train travels 120 km in 2 hours, find its speed. - [Not provided an answer for this question] Missing
+Q1: Simplify: 3x + 4x - 5 + 7
+=> 3x + 4x = 7x
+=> -5 + 7 = 2
+=> 7x + 2
+[Right]
 
-For Q3, the student made an arithmetic error by squaring 7 instead of 6. For Q5, the student divided incorrectly and did not follow the given expression. The student did not provide an answer for Q6.
+Q2: Solve x = 2x + 3 = 11
+2x + 3 = 11
+2x = 8
+2x / 2 = 8 / 2
+=> x = 4
+[Right]
+
+Q3: Area = πr²
+r = 7
+=> 3.14 x 6 x 6
+=> 167.3
+[Wrong, the area should be 153.86 cm²]
+
+Q4: Define Pythagoras theorem.
+Pythagorean is shit
+[Wrong, the answer should define Pythagoras theorem as In a right-angled triangle, the square of the hypotenuse equals the sum of the squares of the other two sides]
+
+Q5: Evaluate (5² + 3²) / 4
+=> 5² = 25
+=> 3² = 9
+=> Sum = 34
+3² + 4 = 8.5
+[Wrong, the correct answer is 8.5]
+
+Q6: Meriyadhu
+[This question seems to be about finding the speed of a train, but the student did not provide an answer. The question text is missing from your provided questions.]
