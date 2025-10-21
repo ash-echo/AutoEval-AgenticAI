@@ -1,7 +1,16 @@
-Q1: What is the unit of force? Define it. - No answer provided - Wrong, the student did not provide an answer for this question.
-
-Q2: State Newtonâ€™s third law of motion. - No answer provided - Wrong, the student did not provide an answer for this question.
-
-Q3: What is the difference between speed and velocity? - No answer provided - Wrong, the student did not provide an answer for this question.
-
-QQ1: [Question not found in key] - The visible text from the image contains several physics concepts but does not correspond to any specific question in the key. It seems like a list of definitions or related terms instead of answers to specific questions. Therefore, it is impossible to determine if any of the provided text correctly answers QQ1 without knowing the actual question.
+Q1: What is the unit of force? Define it. - [The SI unit of force is Newton (N)] - Right
+Q2: State Newton’s third law of motion. - [For every action, there is an equal and opposite reaction] - Right
+Q3: What is the difference between speed and velocity? - [Speed is the rate of change of distance (a scalar quantity), while velocity is the rate of change of position (a vector quantity that includes both magnitude and direction)] - Right
+Q4: What is the unit of speed? - [The unit of speed in the International System of Units (SI) is meters per second (m/s)] - Right
+Q5: What is the unit of velocity? - [The unit of velocity in the International System of Units (SI) is also meters per second (m/s), but it includes direction] - Right
+Q6: What is acceleration? - [Acceleration is the rate at which the velocity of an object changes with respect to time] - Right
+Q7: What is the unit of acceleration? - [The unit of acceleration in the International System of Units (SI) is meters per second squared (m/s²)] - Right
+Q8: What is the difference between linear and angular motion? - [Linear motion refers to an object moving along a straight line, while angular motion refers to an object rotating around a central axis] - Right
+Q9: What is the unit of angular velocity? - [The unit of angular velocity in the International System of Units (SI) is radians per second (rad/s)] - Right
+Q10: What is the unit of angular acceleration? - [The unit of angular acceleration in the International System of Units (SI) is radians per second squared (rad/s²)] - Right
+Q11: What is momentum? - [Momentum is the product of an object's mass and its velocity] - Right
+Q12: What is the unit of momentum? - [The unit of momentum in the International System of Units (SI) is kilogram-meters per second (kg m/s)] - Right
+Q13: What is energy? - [Energy is the capacity to do work] - Right
+Q14: What is the unit of energy? - [The unit of energy in the International System of Units (SI) is joules (J)] - Right
+Q15: What is power? - [Power is the rate at which work is done or energy is used] - Right
+Q16: What is the unit of power? - [The unit of power in the International System of Units (SI) is watts (W)] - Right

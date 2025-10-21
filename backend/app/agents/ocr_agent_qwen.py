@@ -86,7 +86,7 @@ class OCREngine:
             return ""
 
     def _get_subject_prompt(self, subject: str) -> str:
-        """Selects detailed prompt template based on subject context."""
+        """Selects simple prompt template based on subject context."""
         subject_lower = subject.lower()
 
         # Math/Science subject prompt (preserves equations and layout)
@@ -94,68 +94,10 @@ class OCREngine:
             keyword in subject_lower
             for keyword in ["math", "mathematics", "physics", "chemistry", "science"]
         ):
-            return """
-<|system|>
-You are a high-accuracy OCR and layout transcription assistant designed for hybrid exam sheets.
-Your task is to reproduce the *exact visible text, layout, and structure* of the input image.
-Behave like a scanner — never interpret meaning.
-
------------------------------------------------------
-🔹 1. TEXT FIDELITY & SYMBOL PRESERVATION
------------------------------------------------------
-- Capture all visible text exactly as written.
-- Do NOT rewrite, summarize, or infer text.
-- Preserve question labels: Q1., Q2), Q3 :, (a), (i), etc.
-- Include all math and special symbols: ✯ ★ * • → ← ↑ ↓ = + − × ÷ ± ~ ° α β π θ ∞ ≤ ≥ √ ∫ ∑
-- Use [illegible] for unreadable text.
-
------------------------------------------------------
-🔹 2. LINE STRUCTURE & SPACING
------------------------------------------------------
-- Each new printed or handwritten line → new line in output.
-- Maintain indentation and blank lines exactly.
-- Do not merge or alter spacing.
-
------------------------------------------------------
-🔹 3. QUESTION SEPARATION
------------------------------------------------------
-- Start each question with its number label.
-- Keep both printed questions and handwritten answers.
-- Example:
-  Q1. Question (Printed): ...
-  Answer (Handwritten): ...
-
------------------------------------------------------
-🔹 4. BULLETS & LISTS
------------------------------------------------------
-- Preserve bullet symbols: •, ✯, ★, *, →, etc.
-- Each bullet must be on a new line, aligned as seen.
-
------------------------------------------------------
-🔹 5. MATHEMATICAL CONTENT
------------------------------------------------------
-- Use Unicode for powers, fractions, etc.
-  - “a² + b² = c²”
-  - “½ × ⅓ = ⅙”
-- Never use LaTeX. Preserve spacing exactly as visible.
-
------------------------------------------------------
-🔹 6. DIAGRAMS & TABLES
------------------------------------------------------
-- Describe diagrams as: [Diagram: brief description]
-- Example: [Diagram: a labeled triangle with sides a, b, c]
-- For tables: [Table: 2 rows, 3 columns]
-
------------------------------------------------------
-🔹 7. OUTPUT RULES
------------------------------------------------------
-- Only visible text — no markdown or commentary.
-- If no text is present, return an empty string.
-- Never hallucinate or infer missing parts.
-            """
+            return "Transcribe all visible text from this image exactly as it appears, including mathematical symbols and equations. Preserve layout and structure."
 
         # Default generic subject prompt
-        return """You are an expert OCR and exam transcription system for an AI evaluation agent. Read the given exam sheet image (handwritten + printed) and transcribe it *exactly* as it appears. Do NOT summarize, interpret, or clean handwriting. Preserve all structure and symbols. Include all question numbers (Q1., Q2), sublabels ((a), (a1)), bullets, stars, and headings. For math/science notation, use plain Unicode (m/s², H₂O, E = mc², ½, ×, ÷, ±, √). Separate every question properly using labels. If unclear handwriting appears, use [unclear]. Output must maintain ordered question structure and line breaks exactly as seen. This transcription will be used for automatic grading, so accuracy and structure are critical."""
+        return "Transcribe all visible text from this image exactly as it appears. Preserve layout and structure."
 
     def process_folder(self, folder_path: str, subject: str = "general") -> Dict[str, Dict[str, str]]:
         """Process all supported images in a folder and return structured OCR outputs."""
@@ -182,13 +124,16 @@ Behave like a scanner — never interpret meaning.
 
     def parse_exam_output(self, ocr_text: str) -> Dict[str, str]:
         """
-        Parse raw OCR text into structured exam Q&A pairs.
+        Parse raw OCR text into structured exam Q&A pairs with document-level memory.
+        Handles a), b), c), etc. OR 01), 02), 06), etc. formats.
+        Maintains question numbering continuity across pages.
         Returns a dict mapping question numbers to extracted answers.
         """
         structured_answers = {}
         lines = ocr_text.split("\n")
         current_question = None
         current_answer = []
+        question_counter = 0  # Track sequential question numbering
 
         import re
         for line in lines:
@@ -196,27 +141,46 @@ Behave like a scanner — never interpret meaning.
             if not line:
                 continue
 
+            # Match a), b), c), etc. OR 01), 02), 06), etc. format (more flexible)
             question_match = re.match(
-                r"^(?:Q|q)?\s*(\d+)[.)\s-]*(.*)$", line, re.IGNORECASE
+                r".*?([a-z]|\d+)\)\s*(.*)$", line, re.IGNORECASE
             )
 
             if question_match:
                 # Save previous question if present
                 if current_question is not None:
-                    structured_answers[str(current_question)] = " ".join(
-                        current_answer
-                    ).strip()
+                    structured_answers[current_question] = "\n".join(current_answer).strip()
 
-                current_question = question_match.group(1)
+                # Extract the label (letter or number)
+                label = question_match.group(1).lower()
                 remaining_text = question_match.group(2).strip()
+
+                # Determine the question number based on document flow
+                if label.isalpha():
+                    # Letter format: use alphabetical position
+                    expected_num = ord(label) - ord('a') + 1
+                    question_counter = max(question_counter, expected_num)
+                    question_number = str(expected_num)
+                else:
+                    # Number format: could be OCR misread or actual numbering
+                    # If it's a small number that matches our counter + 1, use it
+                    num_val = int(label.lstrip('0') or '0')
+                    if num_val == question_counter + 1:
+                        question_number = str(num_val)
+                        question_counter = num_val
+                    else:
+                        # Assume it's the next sequential question
+                        question_counter += 1
+                        question_number = str(question_counter)
+
+                current_question = question_number
                 current_answer = [remaining_text] if remaining_text else []
 
             elif current_question is not None:
                 current_answer.append(line)
 
         if current_question is not None:
-            structured_answers[str(current_question)] = " ".join(current_answer).strip()
+            structured_answers[current_question] = "\n".join(current_answer).strip()
 
         return structured_answers
-
 

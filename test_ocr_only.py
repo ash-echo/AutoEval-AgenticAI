@@ -11,7 +11,7 @@ def test_ocr_only():
     print("Testing OCR extraction only...")
 
     # Use the same files as the orchestrator test
-    answer_sheet = r"A:\progash\gg\ans phy.pdf"
+    answer_sheet = r"A:\progash\ocr\sample_images\answer sheet.pdf"
 
     print(f"Processing: {answer_sheet}")
 
@@ -35,7 +35,13 @@ def test_ocr_only():
 
         print(f"Found {len(image_paths)} pages")
 
-        # OCR each page
+        # Create correct_ocr directory
+        correct_ocr_dir = Path(__file__).parent / "backend" / "correct_ocr"
+        correct_ocr_dir.mkdir(exist_ok=True, parents=True)
+
+        # OCR each page and accumulate all questions
+        print("\nProcessing all pages and accumulating questions...")
+        
         all_ocr_texts = []
         for i, img_path in enumerate(image_paths):
             print(f"OCR processing page {i+1}: {img_path}")
@@ -43,15 +49,45 @@ def test_ocr_only():
             print(f"OCR Result page {i+1}: {ocr_text[:300]}...")
             all_ocr_texts.append(ocr_text)
 
+        # Combine all pages into one document
         full_ocr_text = '\n\n'.join(all_ocr_texts)
-        print(f"\nFull OCR Text:\n{full_ocr_text}")
+        print(f"\nCombined OCR Text:\n{full_ocr_text[:500]}...")
 
-        # Parse the answers
-        print("\nParsing student answers...")
+        # Parse all questions from the combined document
         student_answers = ocr_engine.parse_exam_output(full_ocr_text)
-        print(f"Parsed answers: {student_answers}")
+        print(f"Found {len(student_answers)} questions total: {list(student_answers.keys())}")
 
-        print("\n✅ OCR test completed successfully!")
+        import json
+        import uuid
+        from datetime import datetime
+
+        submission_id = str(uuid.uuid4())[:8]
+        pdf_name = Path(answer_sheet).stem.replace(' ', '_')  # Clean filename for folder
+
+        # Create subfolder for this PDF
+        pdf_folder = correct_ocr_dir / f"{pdf_name}_{submission_id}"
+        pdf_folder.mkdir(exist_ok=True, parents=True)
+
+        # Save each question as separate JSON file
+        for question_num, answer_text in student_answers.items():
+            # Preserve newlines in the answer
+            answer_lines = [line.strip() for line in answer_text.split('\n') if line.strip()]
+            clean_answer = '\n'.join(answer_lines)
+
+            question_data = {
+                "question_number": question_num,
+                "Answer": clean_answer,
+                "pdf_file": str(answer_sheet)
+            }
+
+            question_file = pdf_folder / f"question_{question_num}.json"
+            with open(question_file, 'w', encoding='utf-8') as f:
+                json.dump(question_data, f, indent=2, ensure_ascii=False)
+
+            print(f"Saved question {question_num} to {question_file}")
+
+        print(f"\n✅ OCR test completed successfully! Found {len(student_answers)} questions total across {len(image_paths)} pages.")
+        print(f"Results saved to {pdf_folder}")
 
     except Exception as e:
         print(f"❌ OCR test failed: {e}")

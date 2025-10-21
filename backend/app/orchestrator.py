@@ -109,8 +109,18 @@ class Orchestrator:
             # Step 3: Parse student answers from OCR
             student_answers = await asyncio.to_thread(ocr_engine.parse_exam_output, full_ocr_text)
 
+            # Clean up OCR model memory to free GPU RAM for evaluation
+            logger.info("Cleaning up OCR model memory...")
+            del ocr_engine
+            import torch
+            if torch.cuda.is_available():
+                torch.cuda.empty_cache()
+            import gc
+            gc.collect()
+            await asyncio.sleep(2)  # Small delay to ensure cleanup
+
             # Step 5: Evaluate
-            from .agents.evaluation_agent_llama import evaluate_answers
+            from .agents.evaluation_agent_mistral import evaluate_answers
             eval_success = await asyncio.to_thread(evaluate_answers, student_answers, question_key)
             
             if eval_success:
