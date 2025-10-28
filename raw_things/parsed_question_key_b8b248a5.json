@@ -1,0 +1,23 @@
+{
+  "parsed_data": {
+    "subject": "Physics",
+    "questions": {
+      "Q1": {
+        "question": "What is the unit of force? Define it.",
+        "ideal_answer": "Model Answer: The SI unit of force is Newton (N). Steps: One Newton is defined as the force required to accelerate a mass of 1 kilogram by 1 metre per second squared (1 m/s²). Therefore, 1 N = 1 kg·m/s². Common student mistakes: Writing 'kg' as the unit of force or confusing it with mass; omitting the relation 1 N = 1 kg·m/s². Rubric:",
+        "marks": 2
+      },
+      "Q2": {
+        "question": "State Newton’s third law of motion.",
+        "ideal_answer": "Model Answer: For every action, there is an equal and opposite reaction. When one body exerts a force on a second body, the second body exerts an equal force in the opposite direction on the first body. Steps: Short statement suffices; illustrate if needed: If body A exerts force F on body B, then B exerts force -F on A. Common student mistakes: Confusing action–reaction with cause–effect (i.e., thinking one causes the other) or stating unequal magnitudes. Rubric:",
+        "marks": 2
+      },
+      "Q3": {
+        "question": "What is the difference between speed and velocity?",
+        "ideal_answer": "Model Answer: Speed is a scalar quantity representing how fast an object moves (magnitude only). Velocity is a vector quantity representing rate of change of displacement, i.e., it has both magnitude and direction. Steps: Explain that speed = distance/time, velocity = displacement/time; give a brief example if needed (e.g., 10 km/h east). Common student mistakes: Using 'distance' instead of 'displacement' for velocity or failing to mention direction for velocity. Rubric: direction) and/or giving the correct formula relation. Total Marks for Paper: 6 Answer Key — VoidV1 Demo",
+        "marks": 2
+      }
+    }
+  },
+  "parsing_timestamp": "2025-10-29 02:22:04.222761"
+}
