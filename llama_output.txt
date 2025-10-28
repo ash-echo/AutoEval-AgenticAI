@@ -1,14 +1,11 @@
 Q1: What is the unit of force? Define it.
 - The SI unit of force is Newton (N). Definition: Newton is the force required to accelerate a mass of 1 kilogram by 1 metre per second squared (1 m/s²). Therefore, 1 N = 1 kg·m/s².
-   - Student's OCR text: The SI unit of force is Newton (N). Definition: Newton is the force that produces an acceleration of 1 m/s² in a body of mass 1 kg. 1N = 1 kg m/s²
    - Right
 
 Q2: State Newton’s third law of motion.
 - For every action, there is an equal and opposite reaction. When one body exerts a force on a second body, the second body exerts an equal force in the opposite direction on the first body.
-   - Student's OCR text: Newton's third law states that for every action, there is an equal and opposite reaction.
    - Right
 
 Q3: What is the difference between speed and velocity?
 - Speed is a scalar quantity representing how fast an object moves (magnitude only). Velocity is a vector quantity representing rate of change of displacement, i.e., it has both magnitude and direction.
-   - Student's OCR text: Speed is the rate of change of distance (a scalar quantity). Velocity is the rate of change of displacement.
    - Right
