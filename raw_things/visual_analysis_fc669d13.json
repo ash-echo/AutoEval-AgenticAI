@@ -1,0 +1,602 @@
+{
+  "status": "success",
+  "total_questions": 20,
+  "questions": {
+    "Q1": {
+      "region_info": {
+        "id": "region_743",
+        "bbox": [
+          1289,
+          58,
+          1635,
+          150
+        ],
+        "area": 31395.0,
+        "question_number": 1
+      },
+      "analysis": {
+        "visual_description": "Visual analysis completed",
+        "question_text": "Question 1",
+        "question_type": "other",
+        "options": {},
+        "answer": "See reasoning for details",
+        "reasoning": "{\n    \"visual_description\": \"The image is a blank rectangular frame with no visible content or elements.\",\n    \"question_text\": \"What is the question being asked?\",\n    \"question_type\": \"mcq|fill_blank|counting|other\",\n    \"options\": {\"a\": \"What is the question being asked?\", \"b\": \"What is the question being asked?\", ...},\n    \"answer\": \"The question is not provided in the image.\",\n    \"reasoning\": \"The image is a blank frame with no text or question, making it impossible to determine the question being asked.\",\n    \"confidence\": 0\n}",
+        "confidence": 6
+      }
+    },
+    "Q2": {
+      "region_info": {
+        "id": "region_732",
+        "bbox": [
+          201,
+          353,
+          238,
+          384
+        ],
+        "area": 286.5,
+        "question_number": 2
+      },
+      "analysis": {
+        "visual_description": "The image contains a black and white text with a large 'N' in the center. The text is not clear and appears to be a mix of letters and numbers.",
+        "question_text": "The question being asked is not clear from the image.",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "The image contains a large 'N' in the center.",
+          "b": "The text is not clear and appears to be a mix of letters and numbers.",
+          "c": "The question is not clear.",
+          "d": "The image is not clear."
+        },
+        "answer": "The question is not clear.",
+        "reasoning": "The question is not clear because the text is not legible and the image does not provide enough information to determine the context or the question being asked.",
+        "confidence": 0
+      }
+    },
+    "Q3": {
+      "region_info": {
+        "id": "region_731",
+        "bbox": [
+          235,
+          353,
+          310,
+          384
+        ],
+        "area": 755.0,
+        "question_number": 3
+      },
+      "analysis": {
+        "visual_description": "The image contains a logo with the text 'IAM' in a stylized font.",
+        "question_text": "What is the text in the logo?",
+        "question_type": "fill_blank",
+        "options": [
+          "IAM",
+          "Analyze this visual question image",
+          "any visual elements like diagrams, charts, pictures, shapes, or mathematical figures",
+          "any counting or measurement tasks"
+        ],
+        "answer": "IAM",
+        "reasoning": "The question is asking for the text in the logo, which is 'IAM'. The options provided do not contain any text, so they are irrelevant to the question.",
+        "confidence": 10
+      }
+    },
+    "Q4": {
+      "region_info": {
+        "id": "region_730",
+        "bbox": [
+          307,
+          353,
+          338,
+          384
+        ],
+        "area": 316.5,
+        "question_number": 4
+      },
+      "analysis": {
+        "visual_description": "The image contains a black and white photograph of a person's face, with the text 'E' in the upper right corner. The background is a plain white surface.",
+        "question_text": "What is the name of the person in the photograph?",
+        "question_type": "fill_blank",
+        "options": [
+          "E",
+          "Eve",
+          "Eli",
+          "Ella"
+        ],
+        "answer": "E",
+        "reasoning": "The text 'E' in the upper right corner of the photograph is the name of the person.",
+        "confidence": 10
+      }
+    },
+    "Q5": {
+      "region_info": {
+        "id": "region_726",
+        "bbox": [
+          204,
+          453,
+          233,
+          484
+        ],
+        "area": 223.5,
+        "question_number": 5
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with a question text and multiple answer options.",
+        "question_text": "What is the answer to the question?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "Option A",
+          "b": "Option B",
+          "c": "Option C",
+          "d": "Option D",
+          "i": "Option I",
+          "ii": "Option II",
+          "iii": "Option III",
+          "iv": "Option IV"
+        },
+        "answer": "Option I",
+        "reasoning": "The question is a multiple-choice question with four options. The answer is Option I because it is the only option that is not a number or a measurement.",
+        "confidence": 8
+      }
+    },
+    "Q6": {
+      "region_info": {
+        "id": "region_725",
+        "bbox": [
+          232,
+          453,
+          260,
+          483
+        ],
+        "area": 213.5,
+        "question_number": 6
+      },
+      "analysis": {
+        "visual_description": "The image contains a visual question image with a question text and multiple choice options.",
+        "question_text": "Question 6",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "Option text",
+          "b": "Option text",
+          "c": "Option text",
+          "d": "Option text",
+          "i": "Option text",
+          "ii": "Option text",
+          "iii": "Option text",
+          "iv": "Option text"
+        },
+        "answer": "Option text",
+        "reasoning": "The question is a multiple-choice question with four options. The question text is not provided, but the multiple choice options are given. The confidence level is 8, as the question is a simple multiple-choice question.",
+        "confidence": 8
+      }
+    },
+    "Q7": {
+      "region_info": {
+        "id": "region_724",
+        "bbox": [
+          260,
+          453,
+          292,
+          483
+        ],
+        "area": 285.0,
+        "question_number": 7
+      },
+      "analysis": {
+        "visual_description": "The image contains a letter 'A' with a question mark above it. The question mark is in a white circle with a black border.",
+        "question_text": "What is the letter above the letter 'A'?",
+        "question_type": "mcq",
+        "options": [
+          "A",
+          "B",
+          "C",
+          "D"
+        ],
+        "answer": "A",
+        "reasoning": "The question is asking for the letter above the letter 'A'. The letter 'A' is already above the letter 'A', so the answer is 'A'.",
+        "confidence": 10
+      }
+    },
+    "Q8": {
+      "region_info": {
+        "id": "region_723",
+        "bbox": [
+          294,
+          453,
+          321,
+          484
+        ],
+        "area": 258.5,
+        "question_number": 8
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with a question text, multiple choice options, and a blank space for a fill-in-the-blank question.",
+        "question_text": "Question 8",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "Option a",
+          "b": "Option b",
+          "c": "Option c",
+          "d": "Option d",
+          "i": "Option i",
+          "ii": "Option ii",
+          "iii": "Option iii",
+          "iv": "Option iv"
+        },
+        "answer": "Option i",
+        "reasoning": "The question is a multiple-choice question with four options. The blank space is for a fill-in-the-blank question, which is a common type of question in MCQ format. The question text is 'Question 8', indicating that this is a question from a series or a specific question number. The options are 'a', 'b', 'c', 'd', 'i', 'ii', 'iii', and 'iv', which are the standard options for multiple-choice questions. The confidence level is 8, as it is a common multiple-choice question with a clear answer.",
+        "confidence": 8
+      }
+    },
+    "Q9": {
+      "region_info": {
+        "id": "region_722",
+        "bbox": [
+          323,
+          453,
+          350,
+          484
+        ],
+        "area": 257.0,
+        "question_number": 9
+      },
+      "analysis": {
+        "visual_description": "The image contains a black letter 'S' with a white background.",
+        "question_text": "What is the letter 'S' in the image?",
+        "question_type": "mcq",
+        "options": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "answer": "a",
+        "reasoning": "The letter 'S' is the first letter of the alphabet and is commonly used in various forms of writing and design.",
+        "confidence": 9
+      }
+    },
+    "Q10": {
+      "region_info": {
+        "id": "region_721",
+        "bbox": [
+          497,
+          453,
+          518,
+          483
+        ],
+        "area": 181.5,
+        "question_number": 10
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with multiple-choice options.",
+        "question_text": "Which of the following is a type of question?",
+        "question_type": "mcq",
+        "options": [
+          "a. Fill-in-the-blank question",
+          "b. Counting question",
+          "c. Diagram question",
+          "d. Mathematical figure question",
+          "e. Shape question",
+          "f. Picture question",
+          "g. Question with multiple-choice options"
+        ],
+        "answer": "f. Question with multiple-choice options",
+        "reasoning": "The question is presented with multiple-choice options, which is a characteristic of a multiple-choice question.",
+        "confidence": 9
+      }
+    },
+    "Q11": {
+      "region_info": {
+        "id": "region_720",
+        "bbox": [
+          603,
+          453,
+          630,
+          484
+        ],
+        "area": 256.5,
+        "question_number": 11
+      },
+      "analysis": {
+        "visual_description": "The image contains a black letter 'S' with a white background.",
+        "question_text": "What is the letter in the image?",
+        "question_type": "mcq",
+        "options": [
+          "a",
+          "b",
+          "c",
+          "d"
+        ],
+        "answer": "a",
+        "reasoning": "The letter 'S' is clearly visible in the image, and it is the only letter present.",
+        "confidence": 10
+      }
+    },
+    "Q12": {
+      "region_info": {
+        "id": "region_719",
+        "bbox": [
+          630,
+          453,
+          662,
+          483
+        ],
+        "area": 294.0,
+        "question_number": 12
+      },
+      "analysis": {
+        "visual_description": "The image contains a black and white photograph of a person's face, with the letters 'E' and 'N' prominently displayed in the image. The letters are in a stylized font, and the background is plain white.",
+        "question_text": "What is the question being asked?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "What is the question being asked?",
+          "b": "What is the question being asked?",
+          "c": "What is the question being asked?",
+          "d": "What is the question being asked?",
+          "i": "What is the question being asked?",
+          "ii": "What is the question being asked?",
+          "iii": "What is the question being asked?",
+          "iv": "What is the question being asked?"
+        },
+        "answer": "The question being asked is 'What is the question being asked?'.",
+        "reasoning": "The question is a fill-in-the-blank question, and the options provided are all variations of the same question. Therefore, the answer is the one that is most commonly used in such questions.",
+        "confidence": 10
+      }
+    },
+    "Q13": {
+      "region_info": {
+        "id": "region_718",
+        "bbox": [
+          665,
+          453,
+          694,
+          484
+        ],
+        "area": 232.5,
+        "question_number": 13
+      },
+      "analysis": {
+        "visual_description": "The image contains a black and white photograph of a clock face with the number 13 visible on it.",
+        "question_text": "What is the time shown on the clock in the image?",
+        "question_type": "mcq",
+        "options": [
+          "1:00",
+          "2:00",
+          "3:00",
+          "4:00",
+          "5:00",
+          "6:00",
+          "7:00",
+          "8:00",
+          "9:00",
+          "10:00",
+          "11:00",
+          "12:00"
+        ],
+        "answer": "10:00",
+        "reasoning": "The clock face shows the number 13, which corresponds to 10:00.",
+        "confidence": 9
+      }
+    },
+    "Q14": {
+      "region_info": {
+        "id": "region_717",
+        "bbox": [
+          697,
+          453,
+          726,
+          483
+        ],
+        "area": 245.0,
+        "question_number": 14
+      },
+      "analysis": {
+        "visual_description": "The image contains a visual question image with a question text and multiple choice options.",
+        "question_text": "Question 14",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "Option text",
+          "b": "Option text",
+          "c": "Option text",
+          "d": "Option text",
+          "i": "Option text",
+          "ii": "Option text",
+          "iii": "Option text",
+          "iv": "Option text"
+        },
+        "answer": "Option text",
+        "reasoning": "The question is a multiple-choice question with four options. The question text is not provided, but the multiple choice options are given. The confidence level is 8, as the question is a simple multiple-choice question.",
+        "confidence": 8
+      }
+    },
+    "Q15": {
+      "region_info": {
+        "id": "region_716",
+        "bbox": [
+          723,
+          453,
+          744,
+          483
+        ],
+        "area": 185.0,
+        "question_number": 15
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with multiple-choice options and a blank space for a fill-in-the-blank question.",
+        "question_text": "What is the question being asked?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "What is the question being asked?",
+          "b": "What is the question being asked?",
+          "c": "What is the question being asked?",
+          "d": "What is the question being asked?",
+          "i": "What is the question being asked?",
+          "ii": "What is the question being asked?",
+          "iii": "What is the question being asked?",
+          "iv": "What is the question being asked?"
+        },
+        "answer": "The question is asking for a fill-in-the-blank question.",
+        "reasoning": "The question type is a fill-in-the-blank question, as indicated by the multiple-choice options and the blank space.",
+        "confidence": 10
+      }
+    },
+    "Q16": {
+      "region_info": {
+        "id": "region_715",
+        "bbox": [
+          744,
+          453,
+          776,
+          484
+        ],
+        "area": 736.5,
+        "question_number": 16
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with multiple-choice options and a blank space for a fill-in-the-blank question.",
+        "question_text": "Which of the following is a type of question?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "Fill-in-the-blank question",
+          "b": "Counting question",
+          "c": "Question with multiple-choice options",
+          "d": "Question with a diagram",
+          "e": "Question with a mathematical figure",
+          "f": "Question with a picture",
+          "g": "Question with a shape",
+          "h": "Question with a question mark",
+          "i": "Question with a question"
+        },
+        "answer": "c",
+        "reasoning": "The question is asking for a type of question, and the options provided are fill-in-the-blank, counting, and other types of questions. The question text does not specify a type of question, so it is open-ended. Therefore, the most appropriate answer is the one that is not specified in the options.",
+        "confidence": 7
+      }
+    },
+    "Q17": {
+      "region_info": {
+        "id": "region_714",
+        "bbox": [
+          777,
+          453,
+          813,
+          483
+        ],
+        "area": 281.0,
+        "question_number": 17
+      },
+      "analysis": {
+        "visual_description": "The image contains a letter 'N' with a background that appears to be a gradient of blue and white.",
+        "question_text": "What is the color of the letter 'N' in the image?",
+        "question_type": "fill_blank",
+        "options": [
+          "blue",
+          "white",
+          "gray",
+          "black"
+        ],
+        "answer": "blue",
+        "reasoning": "The letter 'N' in the image is blue, as indicated by the gradient background.",
+        "confidence": 9
+      }
+    },
+    "Q18": {
+      "region_info": {
+        "id": "region_708",
+        "bbox": [
+          202,
+          503,
+          229,
+          534
+        ],
+        "area": 256.5,
+        "question_number": 18
+      },
+      "analysis": {
+        "visual_description": "The image contains a letter 'S' with a mathematical symbol 'S' above it. The background is white, and the letter 'S' is black.",
+        "question_text": "What is the mathematical symbol above the letter 'S'?",
+        "question_type": "mcq",
+        "options": [
+          "S",
+          "S^2",
+          "S^3",
+          "S^4"
+        ],
+        "answer": "S^2",
+        "reasoning": "The mathematical symbol 'S' above the letter 'S' is an exponentiation symbol, which represents the square of the base number. Therefore, the correct answer is 'S^2'.",
+        "confidence": 9
+      }
+    },
+    "Q19": {
+      "region_info": {
+        "id": "region_707",
+        "bbox": [
+          358,
+          503,
+          387,
+          534
+        ],
+        "area": 227.0,
+        "question_number": 19
+      },
+      "analysis": {
+        "visual_description": "The image contains a question with a question text, multiple choice options, and a blank space for a fill-in-the-blank question.",
+        "question_text": "What is the question being asked?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "What is the question being asked?",
+          "b": "What is the question being asked?",
+          "c": "What is the question being asked?",
+          "d": "What is the question being asked?",
+          "i": "What is the question being asked?",
+          "ii": "What is the question being asked?",
+          "iii": "What is the question being asked?",
+          "iv": "What is the question being asked?"
+        },
+        "answer": "The question is asking for a fill-in-the-blank question.",
+        "reasoning": "The question type is a fill-in-the-blank question, as indicated by the blank space in the question.",
+        "confidence": 10
+      }
+    },
+    "Q20": {
+      "region_info": {
+        "id": "region_706",
+        "bbox": [
+          639,
+          503,
+          665,
+          534
+        ],
+        "area": 258.5,
+        "question_number": 20
+      },
+      "analysis": {
+        "visual_description": "The image contains a letter 'S' with a question mark above it. Below the letter, there are multiple choice options.",
+        "question_text": "What is the question being asked?",
+        "question_type": "mcq|fill_blank|counting|other",
+        "options": {
+          "a": "What is the letter S?",
+          "b": "What is the question mark above the letter S?",
+          "c": "What is the letter S with a question mark above it?",
+          "d": "What is the question mark above the letter S?",
+          "i": "What is the letter S with a question mark above it?",
+          "ii": "What is the letter S with a question mark above it?",
+          "iii": "What is the letter S with a question mark above it?",
+          "iv": "What is the letter S with a question mark above it?"
+        },
+        "answer": "c",
+        "reasoning": "The question is asking for the letter S with a question mark above it. The options provided are all variations of this instruction, but the correct answer is 'c' because it directly addresses the instruction given.",
+        "confidence": 9
+      }
+    }
+  },
+  "full_image_analysis": {
+    "visual_description": "Visual analysis completed",
+    "question_text": "Analyze this complete question paper",
+    "question_type": "other",
+    "options": {},
+    "answer": "See reasoning for details",
+    "reasoning": "```json\n{\n    \"visual_description\": \"A page from a math worksheet with multiple-choice questions and fill-in-the-blank exercises.\",\n    \"question_text\": \"Choose the correct answer.\",\n    \"question_type\": \"mcq|fill_blank|counting|other\",\n    \"options\": {\n        \"a\": \"2 - 6 = 4\",\n        \"b\": \"4 - 6 = 2\",\n        \"c\": \"6 - 4 = 2\",\n        \"d\": \"6x1 = 6\",\n        \"e\": \"6x1 = 6\",\n        \"f\": \"6x1 = 6\",\n        \"g\": \"6x1 = 6\",\n        \"h\": \"6x1 = 6\",\n        \"i\": \"6x1 = 6\",\n        \"j\": \"6x1 = 6\",\n        \"k\": \"6x1 = 6\",\n        \"l\": \"6x1 = 6\",\n        \"m\": \"6x1 = 6\",\n        \"n\": \"6x1 = 6\",\n        \"o\": \"6x1 = 6\",\n        \"p\": \"6x1 = 6\",\n        \"q\": \"6x1 = 6\",\n        \"r\": \"6x1 = 6\",\n        \"s\": \"6x1 = 6\",\n        \"t\": \"6x1 = 6\",\n        \"u\": \"6x1 = 6\",\n        \"v\": \"6x1 = 6\",\n        \"w\": \"6x1 = 6\",\n        \"x\": \"6x1 = 6\",\n        \"y\": \"6x1 = 6\",\n        \"z\": \"6x1 = 6\",\n        \"a\": \"6x1 = 6\",\n        \"b\": \"6x1 = 6\",\n        \"c\": \"6x1 = 6\",\n        \"d\": \"6x1 = 6\",\n        \"e\": \"6x1 = 6\",\n        \"f\": \"6x1 = 6\",\n        \"g\": \"6x1 = 6\",\n        \"h\": \"6x1 = 6\",\n        \"i\": \"6x1 = 6\",\n        \"j\": \"6x1 = 6\",\n        \"k\": \"6x1 = 6\",\n        \"l\":",
+    "confidence": 6
+  },
+  "file_id": "fc669d13-9ed1-402a-aba6-385b7b404039",
+  "filename": "1.jpg",
+  "processing_type": "visual_questions",
+  "timestamp": "2025-10-28 14:34:41.644412"
+}

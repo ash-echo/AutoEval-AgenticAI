@@ -1,0 +1,23 @@
+{
+  "parsed_data": {
+    "subject": "general",
+    "questions": {
+      "Q1": {
+        "question": "",
+        "ideal_answer": "(cid:136) Padding/Margins: Inconsistent white space around content. (cid:136) Paper Deformations: Wrinkles, folds, or curves in the paper. (cid:136) Noise & Artifacts: Scanner dust, shadows, compression artifacts. (cid:136) Contrast/Brightness Variations: Due to scanning or lighting differences. Common Distortions (Issues in Auto-Evaluation) Include: (cid:136) Handwriting Variability: Differences in writing style, spacing, and slant. (cid:136) Spelling Variations: Minor spelling mistakes or synonyms in fill-in-the-blank answers. (cid:136) Answer Positioning Errors: Writing outside designated boxes or overlapping with questions. (cid:136) Overwriting/Strikethroughs: Multiple attempts in the same space causing ambiguity. (cid:136) Multiple Markings in MCQs: Ambiguous ticks, erasures, or use of unclear symbols. (cid:136) Faint/Blurred Writing: Pencil answers or faint ink reducing recognition accuracy. (cid:136) Noise Interference: Smudges, ink bleeding, or scanning shadows. (cid:136) Reference Script Rigidity: Strict matching may not account for valid alternate answers. Technical Requirements Input: (cid:136) Original question paper template. (cid:136) Scanned student answer sheet. (cid:136) Reference answer script. Expected Output: (cid:136) Correctly aligned answer sheet image. (cid:136) Transformation parameters applied. (cid:136) Alignment accuracy/confidence score. (cid:136) Auto-evaluated results with per-question marks. Constraints (cid:136) Preserve all student handwriting without loss. (cid:136) Support standard document formats (JPEG, PNG). (cid:136) Maintain resolution ≥ 300 DPI. (cid:136) No specialized hardware required.",
+        "marks": 1
+      },
+      "Q2": {
+        "question": "",
+        "ideal_answer": "Bonus Challenges (cid:136) Multi-page support for stapled booklets. (cid:136) Damage recovery for torn or faded sheets. (cid:136) Real-time preview of alignment corrections. (cid:136) Handwriting readability enhancement. (cid:136) Automated validation: flagging uncertain cases for manual review. (cid:136) Explainable evaluation: showing why a response was marked correct/incorrect. Deliverables (cid:136) Working prototype/application. (cid:136) Source code with documentation. (cid:136) Test results on provided dataset. (cid:136) Technical approach document (with agent responsibilities). (cid:136) Draft of the research paper (If innovations are involved in the process) (cid:136) Demo video (3–5 minutes).",
+        "marks": 1
+      },
+      "Q3": {
+        "question": "",
+        "ideal_answer": "",
+        "marks": 1
+      }
+    }
+  },
+  "parsing_timestamp": "2025-10-28 19:42:01.746624"
+}

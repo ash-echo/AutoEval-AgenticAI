@@ -1,0 +1,11 @@
+{
+  "parsed_answers": {
+    "1": "3x + 4x - 5 + 7\n=> 3x + 4x = 7x\n=> -5 + 7 = 2\n=> 7x + 2",
+    "2": "Solve x = 2x + 3 = 11\n2x + 3 = 11\n2x = 8\n2x / 2 = 8 / 2\n=> x = 4",
+    "3": "Area = πr²\nr = 7\n=> 3.14 x 6 x 6\n=> 167.3",
+    "4": "Pythagorean is shit",
+    "5": "Evaluate (5² + 3²) / 4\n=> 5² = 25\n=> 3² = 9\n=> Sum = 34\n3² + 4 = 8.5\n```\nThe visible text from the image is:",
+    "6": "Meriyadhu"
+  },
+  "parsing_timestamp": "2025-10-28 22:39:29.236228"
+}

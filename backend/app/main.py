@@ -2,9 +2,12 @@
 FastAPI backend for the multi-agent exam evaluation system.
 """
 
+import asyncio
+import json
 import logging
 import os
 import uuid
+from datetime import datetime
 from pathlib import Path
 from fastapi import FastAPI, UploadFile, File, HTTPException, Form
 from fastapi.middleware.cors import CORSMiddleware
@@ -214,4 +217,77 @@ async def get_analytics():
 
     except Exception as e:
         logger.error(f"Failed to get analytics: {e}")
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/process_visual", response_model=dict)
+async def process_visual_questions(file: UploadFile = File(...)):
+    """
+    Process visual question papers with MCQs, diagrams, and fill-in-the-blanks.
+    Mode 2: Visual Question Analysis
+    """
+    try:
+        # Validate file type
+        allowed_exts = {'.pdf', '.jpg', '.jpeg', '.png'}
+        file_ext = Path(file.filename).suffix.lower()
+        if file_ext not in allowed_exts:
+            raise HTTPException(status_code=400, detail="Only PDF and image files are supported for visual questions")
+
+        # Save uploaded file
+        file_id = str(uuid.uuid4())
+        file_path = UPLOAD_DIR / f"{file_id}_visual_questions{file_ext}"
+        with open(file_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
+
+        logger.info(f"Visual question paper saved: {file_path}")
+
+        # Convert PDF to image if needed
+        if file_ext == '.pdf':
+            try:
+                from pdf2image import convert_from_path
+                pages = convert_from_path(str(file_path))
+                if pages:
+                    # Use first page for now
+                    image_path = UPLOAD_DIR / f"{file_id}_visual_page_1.jpg"
+                    pages[0].save(image_path, 'JPEG')
+                    processing_path = str(image_path)
+                else:
+                    raise HTTPException(status_code=400, detail="Could not extract pages from PDF")
+            except ImportError:
+                raise HTTPException(status_code=400, detail="PDF processing not available. Please upload image files.")
+        else:
+            processing_path = str(file_path)
+
+        # Process visual questions
+        from .agents.visual_question_agent import process_visual_questions
+        result = await asyncio.to_thread(process_visual_questions, processing_path)
+
+        # Clean up GPU memory
+        import torch
+        if torch.cuda.is_available():
+            torch.cuda.empty_cache()
+            logger.info("GPU cache cleared after visual processing")
+
+        # Add metadata
+        result.update({
+            'file_id': file_id,
+            'filename': file.filename,
+            'processing_type': 'visual_questions',
+            'timestamp': str(datetime.utcnow())
+        })
+
+        # Save results to raw_things folder
+        project_root = Path(__file__).parent.parent.parent
+        raw_things_dir = project_root / "raw_things"
+        raw_things_dir.mkdir(exist_ok=True)
+
+        visual_results_file = raw_things_dir / f"visual_analysis_{file_id[:8]}.json"
+        with open(visual_results_file, 'w', encoding='utf-8') as f:
+            json.dump(result, f, indent=2, ensure_ascii=False)
+
+        logger.info(f"Visual analysis completed. Found {result.get('total_questions', 0)} questions")
+        return result
+
+    except Exception as e:
+        logger.error(f"Visual processing failed: {e}")
         raise HTTPException(status_code=500, detail=str(e))

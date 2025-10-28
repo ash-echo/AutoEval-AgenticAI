@@ -2,8 +2,13 @@ import { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Upload, FileText, User, BookOpen, CheckCircle, AlertCircle, Loader } from 'lucide-react';
 import axios from 'axios';
+import VisualUploadForm from './VisualUploadForm';
 
-const UploadForm = ({ onUpload }) => {
+const UploadForm = ({ onUpload, mode = 'text' }) => {
+  // If mode is visual, render the VisualUploadForm
+  if (mode === 'visual') {
+    return <VisualUploadForm onUpload={onUpload} />;
+  }
   const [answerSheet, setAnswerSheet] = useState(null);
   const [questionKey, setQuestionKey] = useState(null);
   const [studentName, setStudentName] = useState('');

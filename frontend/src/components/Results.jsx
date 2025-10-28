@@ -1,8 +1,14 @@
 import { motion } from 'framer-motion';
 import { Trophy, Target, TrendingUp, Award, CheckCircle, XCircle, AlertTriangle, ArrowLeft, User, BookOpen } from 'lucide-react';
+import VisualResults from './VisualResults';
 
 const Results = ({ data, onBack }) => {
   if (!data) return null;
+
+  // Check if this is visual question results (Mode 2)
+  if (data.processing_type === 'visual_questions' || data.questions) {
+    return <VisualResults data={data} onBack={onBack} />;
+  }
 
   const scorePercentage = data.total_score && data.max_score ? (data.total_score / data.max_score) * 100 : 0;
   const isPassing = scorePercentage >= 60;
