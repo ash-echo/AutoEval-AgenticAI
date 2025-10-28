@@ -1,7 +1,17 @@
-Q1: What is the unit of force? Define it. - The SI unit of force is Newton (N). Definition: Newton is the force required to accelerate a mass of 1 kilogram by 1 metre per second squared (1 m/s²). Therefore, 1 N = 1 kg·m/s². [Right]
+Q1: Simplify: 3x + 4x - 5 + 7
+=> 7x + 2 (Correct)
 
-Q2: State Newton’s third law of motion. - Newton's third law states that for every action, there is an equal and opposite reaction. [Right]
+Q2: Solve for x: 2x + 3 = 11
+=> x = 4 (Correct)
 
-Q3: What is the difference between speed and velocity? - Speed is a scalar quantity representing how fast an object moves (magnitude only). Velocity is a vector quantity representing rate of change of displacement, i.e., it has both magnitude and direction. [Right]
+Q3: Find the area of a circle with radius 7 cm.
+=> Area = πr² (Incorrect, student used correct formula but incorrect value for radius)
 
-The student's answers are correct for all questions. Good job!
+Q4: Define Pythagoras theorem.
+=> Pythagorean is shit (Incorrect, student did not provide a definition)
+
+Q5: Evaluate: (5² + 3²) ÷ 4
+=> 8.5 (Correct)
+
+Q6: If a train travels 120 km in 2 hours, find its speed.
+(Missing answer, student provided "Meriyadhu" which does not relate to the question)
