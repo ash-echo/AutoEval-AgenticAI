@@ -46,60 +46,105 @@ const Results = ({ data, onBack }) => {
       <motion.div
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.2, duration: 0.6 }}
-        className="bg-white/80 backdrop-blur-sm rounded-3xl p-8 shadow-2xl border border-white/20"
+        transition={{ delay: 0.2, duration: 0.8 }}
+        className="glass-card rounded-3xl p-10 shadow-2xl hover-lift relative overflow-hidden"
       >
-        <div className="text-center mb-8">
+        <motion.div
+          className="absolute inset-0 bg-gradient-to-r from-purple-600/10 to-pink-600/10 opacity-50"
+          animate={{ opacity: [0.3, 0.7, 0.3] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        />
+        
+        <div className="text-center mb-10 relative z-10">
           <motion.div
-            className={`w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-r ${getScoreColor(scorePercentage)} flex items-center justify-center shadow-lg`}
-            animate={{ rotate: [0, 10, -10, 0] }}
-            transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+            className={`w-28 h-28 mx-auto mb-8 rounded-3xl bg-gradient-to-r ${getScoreColor(scorePercentage)} flex items-center justify-center shadow-2xl animate-glow`}
+            animate={{ 
+              rotate: [0, 10, -10, 0],
+              scale: [1, 1.1, 1]
+            }}
+            transition={{ duration: 3, repeat: Infinity, repeatDelay: 2 }}
           >
-            <ScoreIcon className="w-12 h-12 text-white" />
+            <ScoreIcon className="w-14 h-14 text-white" />
           </motion.div>
 
-          <h2 className="text-3xl font-bold text-gray-900 mb-2">Evaluation Complete!</h2>
-          <p className="text-gray-600">Here's your detailed assessment breakdown</p>
+          <motion.h2 
+            className="text-5xl font-bold text-white mb-4 font-['Orbitron']"
+            animate={{ 
+              textShadow: [
+                "0 0 20px rgba(139, 92, 246, 0.5)",
+                "0 0 30px rgba(168, 85, 247, 0.7)",
+                "0 0 20px rgba(139, 92, 246, 0.5)"
+              ]
+            }}
+            transition={{ duration: 2, repeat: Infinity }}
+          >
+            Evaluation Complete! 🎉
+          </motion.h2>
+          <p className="text-white/90 text-xl font-medium">✨ Here's your detailed assessment breakdown</p>
         </div>
 
         {/* Score Display */}
-        <div className="flex flex-col items-center mb-8">
+        <div className="flex flex-col items-center mb-12 relative z-10">
           <motion.div
-            className="relative mb-6"
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.5, duration: 0.8, type: "spring" }}
+            className="relative mb-8"
+            initial={{ scale: 0, rotate: -180 }}
+            animate={{ scale: 1, rotate: 0 }}
+            transition={{ delay: 0.5, duration: 1.2, type: "spring" }}
           >
-            <div className={`w-48 h-48 rounded-full bg-gradient-to-r ${getScoreColor(scorePercentage)} flex items-center justify-center shadow-2xl`}>
-              <div className="text-center text-white">
-                <div className="text-5xl font-bold">{data.total_score || 0}</div>
-                <div className="text-xl opacity-90">/ {data.max_score || 0}</div>
+            <div className={`w-56 h-56 rounded-full bg-gradient-to-r ${getScoreColor(scorePercentage)} flex items-center justify-center shadow-2xl animate-glow relative overflow-hidden`}>
+              <motion.div
+                className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              />
+              <div className="text-center text-white relative z-10">
+                <motion.div 
+                  className="text-6xl font-bold font-['Orbitron']"
+                  animate={{ scale: [1, 1.1, 1] }}
+                  transition={{ duration: 2, repeat: Infinity }}
+                >
+                  {data.total_score || 0}
+                </motion.div>
+                <div className="text-2xl opacity-90 font-semibold">/ {data.max_score || 0}</div>
               </div>
             </div>
+            
+            {/* Animated ring */}
             <motion.div
-              className="absolute inset-0 rounded-full border-8 border-white/30"
-              initial={{ pathLength: 0 }}
-              animate={{ pathLength: scorePercentage / 100 }}
-              transition={{ delay: 1, duration: 2, ease: "easeInOut" }}
-              style={{
-                background: `conic-gradient(from 0deg, rgba(255,255,255,0.8) ${scorePercentage}%, transparent ${scorePercentage}%)`,
-                mask: 'radial-gradient(farthest-side, transparent calc(100% - 8px), black calc(100% - 8px))',
-                WebkitMask: 'radial-gradient(farthest-side, transparent calc(100% - 8px), black calc(100% - 8px))'
+              className="absolute inset-0 rounded-full border-8 border-purple-400/50"
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ 
+                scale: [0.8, 1.2, 0.8],
+                opacity: [0, 0.8, 0]
               }}
+              transition={{ duration: 2, repeat: Infinity }}
             />
           </motion.div>
 
           <motion.div
-            className="text-center"
-            initial={{ opacity: 0, y: 20 }}
+            className="text-center glass p-6 rounded-2xl"
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.8, duration: 0.6 }}
+            transition={{ delay: 1, duration: 0.8 }}
           >
-            <div className="text-2xl font-bold text-gray-900 mb-1">
+            <motion.div 
+              className="text-4xl font-bold text-white mb-2 font-['Orbitron']"
+              animate={{ 
+                textShadow: [
+                  "0 0 10px rgba(255, 255, 255, 0.5)",
+                  "0 0 20px rgba(168, 85, 247, 0.8)",
+                  "0 0 10px rgba(255, 255, 255, 0.5)"
+                ]
+              }}
+              transition={{ duration: 2, repeat: Infinity }}
+            >
               {scorePercentage.toFixed(1)}%
-            </div>
-            <div className={`text-lg font-semibold ${isPassing ? 'text-green-600' : 'text-red-600'}`}>
-              {isPassing ? 'Passing Grade' : 'Needs Improvement'}
+            </motion.div>
+            <div className={`text-xl font-bold flex items-center justify-center space-x-2 ${
+              isPassing ? 'text-green-400' : 'text-red-400'
+            }`}>
+              {isPassing ? '🎉' : '💪'}
+              <span>{isPassing ? 'Excellent Performance!' : 'Keep Improving!'}</span>
             </div>
           </motion.div>
         </div>

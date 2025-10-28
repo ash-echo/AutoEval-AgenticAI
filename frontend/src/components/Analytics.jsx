@@ -56,23 +56,37 @@ const Analytics = () => {
 
   const StatCard = ({ title, value, icon: Icon, color, subtitle, delay = 0 }) => (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay, duration: 0.6 }}
-      className={`bg-gradient-to-br ${color} rounded-2xl p-6 text-white shadow-xl`}
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay, duration: 0.8, type: "spring" }}
+      className={`bg-gradient-to-br ${color} rounded-3xl p-8 text-white shadow-2xl hover-lift relative overflow-hidden animate-glow`}
     >
-      <div className="flex items-center justify-between mb-4">
-        <Icon className="w-8 h-8 opacity-80" />
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0"
+        whileHover={{ opacity: 1 }}
+        transition={{ duration: 0.3 }}
+      />
+      
+      <div className="flex items-center justify-between mb-6 relative z-10">
         <motion.div
-          animate={{ scale: [1, 1.1, 1] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          className="text-2xl font-bold"
+          animate={{ rotate: [0, 10, -10, 0] }}
+          transition={{ duration: 3, repeat: Infinity }}
+        >
+          <Icon className="w-10 h-10 opacity-90" />
+        </motion.div>
+        <motion.div
+          animate={{ 
+            scale: [1, 1.1, 1],
+            rotateY: [0, 180, 360]
+          }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="text-4xl font-bold font-['Orbitron']"
         >
           {value}
         </motion.div>
       </div>
-      <h3 className="text-lg font-semibold mb-1">{title}</h3>
-      {subtitle && <p className="text-sm opacity-80">{subtitle}</p>}
+      <h3 className="text-xl font-bold mb-2 relative z-10">{title}</h3>
+      {subtitle && <p className="text-sm opacity-90 font-medium relative z-10">{subtitle}</p>}
     </motion.div>
   );
 
@@ -140,17 +154,17 @@ const Analytics = () => {
           title="Total Submissions"
           value={totalSubmissions}
           icon={Users}
-          color="from-blue-500 to-blue-600"
-          subtitle="Evaluations completed"
+          color="from-purple-500 via-purple-600 to-pink-600"
+          subtitle="🎯 Evaluations completed"
           delay={0.1}
         />
 
         <StatCard
           title="Average Score"
-          value={averageScore.toFixed(1)}
+          value={`${averageScore.toFixed(1)}%`}
           icon={Award}
-          color="from-green-500 to-green-600"
-          subtitle="Overall performance"
+          color="from-pink-500 via-rose-600 to-purple-600"
+          subtitle="✨ Overall performance"
           delay={0.2}
         />
 
@@ -158,17 +172,17 @@ const Analytics = () => {
           title="Active Subjects"
           value={Object.keys(subjectBreakdown).length}
           icon={BookOpen}
-          color="from-purple-500 to-purple-600"
-          subtitle="Different subjects"
+          color="from-blue-500 via-purple-600 to-indigo-600"
+          subtitle="📚 Different subjects"
           delay={0.3}
         />
 
         <StatCard
           title="Success Rate"
-          value={averageScore >= 60 ? 'Good' : 'Needs Work'}
+          value={averageScore >= 60 ? '🎉 Great' : '💪 Growing'}
           icon={TrendingUp}
-          color={averageScore >= 60 ? "from-emerald-500 to-emerald-600" : "from-orange-500 to-orange-600"}
-          subtitle={`${averageScore.toFixed(1)}% average`}
+          color={averageScore >= 60 ? "from-emerald-500 via-green-600 to-teal-600" : "from-orange-500 via-amber-600 to-yellow-600"}
+          subtitle={`${averageScore.toFixed(1)}% average score`}
           delay={0.4}
         />
       </div>
