@@ -1,17 +1,21 @@
 Q1: Simplify: 3x + 4x - 5 + 7
-=> 7x + 2 (Correct)
+=> 7x + 2
+[Right] The student combined like terms correctly and obtained the correct answer.
 
 Q2: Solve for x: 2x + 3 = 11
-=> x = 4 (Correct)
+=> x = 4
+[Right] The student solved the equation correctly.
 
 Q3: Find the area of a circle with radius 7 cm.
-=> Area = πr² (Incorrect, student used correct formula but incorrect value for radius)
+=> 167.3
+[Wrong] The student used the incorrect value for pi (π = 3.14, not 6).
 
 Q4: Define Pythagoras theorem.
-=> Pythagorean is shit (Incorrect, student did not provide a definition)
+[Wrong] The student provided an incorrect and inappropriate definition.
 
 Q5: Evaluate: (5² + 3²) ÷ 4
-=> 8.5 (Correct)
+=> 8.5
+[Right] The student performed the calculations correctly.
 
-Q6: If a train travels 120 km in 2 hours, find its speed.
-(Missing answer, student provided "Meriyadhu" which does not relate to the question)
+Q6: Meriyadhu
+[Missing] This question is not related to the previous ones and seems to be a typo or an additional question that was not provided in the original list.
