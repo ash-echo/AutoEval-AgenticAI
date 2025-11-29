@@ -1,0 +1,23 @@
+{
+  "parsed_data": {
+    "subject": "Physics",
+    "questions": {
+      "Q1": {
+        "question": "What is the unit of force? Define it.",
+        "ideal_answer": "",
+        "marks": 1
+      },
+      "Q2": {
+        "question": "State Newton’s third law of motion.",
+        "ideal_answer": "",
+        "marks": 1
+      },
+      "Q3": {
+        "question": "What is the difference between speed and velocity?",
+        "ideal_answer": "",
+        "marks": 1
+      }
+    }
+  },
+  "parsing_timestamp": "2025-10-21 21:16:31.380101"
+}

@@ -1,0 +1,38 @@
+{
+  "parsed_data": {
+    "subject": "Mathematics",
+    "questions": {
+      "Q1": {
+        "question": "Simplify: 3x + 4x - 5 + 7",
+        "ideal_answer": "Model Answer: 7x + 2 Steps: Combine like terms: 3x + 4x = 7x; combine constants: -5 + 7 = 2 fi 7x + 2. Rubric:",
+        "marks": 3
+      },
+      "Q2": {
+        "question": "Solve for x: 2x + 3 = 11",
+        "ideal_answer": "Model Answer: x = 4 Steps: 2x + 3 = 11 fi subtract 3 from both sides: 2x = 8 fi divide by 2: x = 4. Common student mistakes: Arithmetic slip leading to x = 5 (as in sample student sheet). Rubric:",
+        "marks": 3
+      },
+      "Q3": {
+        "question": "Find the area of a circle with radius 7 cm.",
+        "ideal_answer": "Model Answer: 153.86 cm² (using p » 3.14) Steps: Area = pr². Substitute r = 7: A = 3.14 × 7 × 7 = 3.14 × 49 = 153.86 cm². Common student mistakes: Student used radius 6 by mistake — intentionally wrong. Rubric: Answer Key — VoidV1 Demo",
+        "marks": 5
+      },
+      "Q4": {
+        "question": "Define Pythagoras theorem.",
+        "ideal_answer": "Model Answer: In a right-angled triangle, the square of the hypotenuse equals the sum of the squares of the other two sides. Steps: Short statement suffices. Example: c² = a² + b². Rubric:",
+        "marks": 3
+      },
+      "Q5": {
+        "question": "Evaluate: (5² + 3²) ÷ 4",
+        "ideal_answer": "Model Answer: 8.5 Steps: 5² = 25; 3² = 9; sum = 34; divide by 4 fi 34 ÷ 4 = 8.5. Common student mistakes: Student mis-divided — intentionally wrong. Rubric:",
+        "marks": 4
+      },
+      "Q6": {
+        "question": "If a train travels 120 km in 2 hours, find its speed.",
+        "ideal_answer": "Model Answer: 60 km/hr Steps: Speed = Distance / Time = 120 km / 2 hr = 60 km/hr. Rubric: Answer Key — VoidV1 Demo",
+        "marks": 4
+      }
+    }
+  },
+  "parsing_timestamp": "2025-10-21 22:53:01.023464"
+}
